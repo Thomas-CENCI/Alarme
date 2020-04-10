@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 public class Moniteur {
     ArrayList<Alarme> alarmList = new ArrayList<Alarme>();
+    private Anomalie anomalie;
 
     public void addAlarmListener(Alarme alarme){
         this.alarmList.add(alarme);
@@ -11,15 +12,19 @@ public class Moniteur {
         this.alarmList.remove(alarme);
     }
 
-    public void generateAnomalie(String type){
-        if(type.toUpperCase() == "INCENDIE") {
-            Anomalie anomalie = new Incendie(this);
+    public void generateAnomalie(String type) {
+        if (type.toUpperCase().equals("INCENDIE")) {
+            anomalie = new Incendie(this);
         }
-        if(type.toUpperCase() == "RADIATION") {
-            Anomalie anomalie = new Radiation(this);
+        if (type.toUpperCase().equals("RADIATION")) {
+             anomalie = new Radiation(this);
         }
-        if(type.toUpperCase() == "GAZ") {
-            Anomalie anomalie = new Gaz(this);
+        if (type.toUpperCase().equals("GAZ")) {
+            anomalie = new Gaz(this);
+        }
+
+        for (Alarme a : alarmList){
+            a.testSeuil(anomalie.seuil());
         }
     }
 }

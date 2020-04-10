@@ -12,7 +12,5 @@ public abstract class Anomalie extends EventObject {
         this.localisation = "Lab";
         this.defcon = 3;
     }
-
-    abstract void seuil();
-
+    abstract int seuil();
 }

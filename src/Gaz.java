@@ -10,8 +10,7 @@ public class Gaz extends Anomalie {
         this.type = type;
     }
 
-    public void seuil(){
-        System.out.println("Hello world from gaz");
+    public int seuil(){
+       return 100;
     }
-
 }

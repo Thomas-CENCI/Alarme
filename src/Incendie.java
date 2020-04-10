@@ -5,7 +5,7 @@ public class Incendie extends Anomalie {
         super(source);
     }
 
-    public void seuil(){
-        System.out.println("Hello world from fire");
+    public int seuil(){
+        return 10;
     }
 }

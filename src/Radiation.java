@@ -9,7 +9,6 @@ public class Radiation extends Anomalie {
         this.radiation_lvl = radiation_lvl;
     }
 
-    public void seuil(){
-        System.out.println("Hello world from radiation");
-    }
-}
+    public int seuil(){
+        return 10000;
+    }}
