@@ -1,4 +1,4 @@
-# Alarme
+# Package.Alarme
 Un grand laboratoire de physique comporte plusieurs risques liés aux : 
 
  ###### • incendies qui peuvent surgir dans chacun des bâtiments qui le composent, 
