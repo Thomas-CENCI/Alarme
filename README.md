@@ -12,3 +12,8 @@ En plus de ces informations :
 ###### • Pour les radiations il faut indiquer le niveau de radiation (variant entre 1 et 100). Le système de sécurité veut mettre en place différents types de moniteurs dans ses salles de contrôle.
 ###### • Les moniteurs de type A sont capables de gérer des alarmes de type gaz et feu (destinés aux pompiers).
 ###### • Les moniteurs de type B sont capables de gérer des alarmes de type gaz et radiation (service environnement).
+
+# Contributors
+Joe
+Joe
+Joe
