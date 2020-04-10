@@ -1,5 +1,3 @@
-package Package;
-
 public class Alarme {
 
     public void testSeuil(){

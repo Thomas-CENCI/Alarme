@@ -1,5 +1,3 @@
-package Package;
-
 public class Radiation extends Anomalie {
     int radiation_lvl;
 

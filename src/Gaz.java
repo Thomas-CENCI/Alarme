@@ -1,4 +1,3 @@
-package Package;
 
 public class Gaz extends Anomalie {
     String type;
