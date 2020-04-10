@@ -14,6 +14,6 @@ En plus de ces informations :
 ###### • Les moniteurs de type B sont capables de gérer des alarmes de type gaz et radiation (service environnement).
 
 # Contributors
-Joe
-Joe
-Joe
+###### Joe
+###### Joe
+###### Joe
