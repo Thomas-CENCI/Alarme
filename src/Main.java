@@ -9,5 +9,6 @@ public class Main {
         m.generateAnomalie("gaz");
         m.generateAnomalie("radiation");
 
+        Frame f = new Frame();
     }
 }
