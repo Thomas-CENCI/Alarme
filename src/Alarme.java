@@ -1,13 +1,18 @@
+import javax.swing.*;
+
 public class Alarme {
 
     public void testSeuil(int val){
         int valmax = 100;
 
+        JOptionPane message = new JOptionPane();
+
+
         if (val > valmax){
-            System.out.println("Alert");
+            message.showMessageDialog(null, "Une alarme à detecter une anomalie", "Alert", JOptionPane.WARNING_MESSAGE);
         }
         else{
-            System.out.println("Ce qui va c'est que je suis là");
+            message.showMessageDialog(null, "Tudo ben", "Information", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 }
