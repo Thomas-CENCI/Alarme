@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.ImageIcon;
@@ -180,17 +181,22 @@ public class Frame extends JFrame {
         });
 
         JButton button2 = new JButton("Valider");
-        ArrayList<String> selectedValues = new ArrayList<String>();
+        HashMap<String, String> selectedValues = new HashMap<String, String>();
         JOptionPane lackOfValues = new JOptionPane();
         button2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
                 if(atLeastOneIsSelected(batButtons) && atLeastOneIsSelected(typeButtons) && atLeastOneIsSelected(nivButtons)) {
-                    selectedValues.add(valueOfSelectedElement(batButtons).toUpperCase());
-                    selectedValues.add(valueOfSelectedElement(typeButtons).toUpperCase());
-                    selectedValues.add(valueOfSelectedElement(nivButtons).toUpperCase());
+                    selectedValues.put("batiment", valueOfSelectedElement(batButtons).toUpperCase());
+                    selectedValues.put("type_anomalie", valueOfSelectedElement(typeButtons).toUpperCase());
+                    selectedValues.put("niveau_importance", valueOfSelectedElement(nivButtons).toUpperCase());
+                    System.out.println(!(selectedValues.get("batiment").equals("INCENDIE")));
+                    if(isDetailedType(type_detail)) {
+                        selectedValues.put("detail_type", type_detail.getText().toUpperCase());
+                    }
+                    System.out.println(selectedValues);
                     dispose();
                     for(Moniteur moniteur : moniteurs) {
-                        moniteur.generateAnomalie(selectedValues.get(0), selectedValues.get(1), Integer.parseInt(selectedValues.get(2)));
+                        moniteur.generateAnomalie(selectedValues.get("batiment"), selectedValues.get("type_anomalie"), Integer.parseInt(selectedValues.get("niveau_importance")));
                     }
                 }
                 else{
