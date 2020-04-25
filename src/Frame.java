@@ -8,7 +8,8 @@ import javax.swing.ImageIcon;
 
 public class Frame extends JFrame {
 
-    CardLayout cardLayout = new CardLayout();
+    CardLayout cardLayout_content = new CardLayout();
+    CardLayout cardLayout_detail = new CardLayout();
     JPanel content = new JPanel();
     JLabel label = new JLabel("Bâtiment");
     String[] listContent = {"Type d'alarme", "Niveau d'importance", "Bâtiment"};
@@ -27,10 +28,24 @@ public class Frame extends JFrame {
 
         JPanel batiment_panel = new JPanel();
         batiment_panel.setBackground(Color.DARK_GRAY);
+        JPanel main_type_panel = new JPanel();
+        main_type_panel.setBackground(Color.DARK_GRAY);
         JPanel type_panel = new JPanel();
         type_panel.setBackground(Color.DARK_GRAY);
+        JPanel type_detail_panel = new JPanel();
+        type_detail_panel.setBackground(Color.DARK_GRAY);
+        type_detail_panel.setVisible(false);
+        JLabel type_label = new JLabel("Merci de préciser :");
+        type_label.setForeground(Color.WHITE);
+        type_detail_panel.add(type_label);
         JPanel niv_panel = new JPanel();
         niv_panel.setBackground(Color.DARK_GRAY);
+
+        BoxLayout boxLayout = new BoxLayout(main_type_panel, BoxLayout.Y_AXIS);
+        main_type_panel.setLayout(boxLayout);
+
+        main_type_panel.add(type_panel);
+        main_type_panel.add(type_detail_panel);
 
         JPanel button_panel = new JPanel();
         button_panel.setBackground(Color.DARK_GRAY);
@@ -69,19 +84,58 @@ public class Frame extends JFrame {
         batiment_panel.add(bat3, BorderLayout.CENTER);
         batiment_panel.add(bat4, BorderLayout.CENTER);
 
+        JTextField radiation_level = new JTextField("niveau de radiation (1 - 100)");
+        radiation_level.addFocusListener(new FocusListener() {
+            public void focusGained(FocusEvent e) {
+                radiation_level.setText("");
+            }
+            public void focusLost(FocusEvent e) {
+
+                /** Avoir comment faire pour faire en sorte que la valeur entrée soit conservée
+                 *  même si le focus est perdu. (Le focus est-il perdu en appuyant sur Suivant ?) */
+
+            }
+        });
+        radiation_level.setVisible(false);
+        type_detail_panel.add(radiation_level, BorderLayout.SOUTH);
+
+        JTextField gaz_type = new JTextField("Type de gaz émis");
+        gaz_type.addFocusListener(new FocusListener() {
+            public void focusGained(FocusEvent e) {
+                gaz_type.setText("");
+            }
+            public void focusLost(FocusEvent e) {
+
+                /** Avoir comment faire pour faire en sorte que la valeur entrée soit conservée
+                 *  même si le focus est perdu. (Le focus est-il perdu en appuyant sur Suivant ?) */
+
+            }
+        });
+        gaz_type.setVisible(false);
+        type_detail_panel.add(gaz_type, BorderLayout.SOUTH);
+
         JRadioButton type1 = new JRadioButton("Incendie");
         type1.addActionListener(e -> {
             label.setText("Your current choice is 'Incendie'.\n");
+            type_detail_panel.setVisible(false);
         });
 
         JRadioButton type2 = new JRadioButton("Gaz");
         type2.addActionListener(e -> {
             label.setText("Your current choice is 'Gaz'.\n");
+            type_detail_panel.setVisible(true);
+            type_label.setVisible(true);
+            radiation_level.setVisible(false);
+            gaz_type.setVisible(true);
         });
 
         JRadioButton type3 = new JRadioButton("Radiation");
         type3.addActionListener(e -> {
             label.setText("Your current choice is 'Radiation'.\n");
+            type_detail_panel.setVisible(true);
+            type_label.setVisible(true);
+            gaz_type.setVisible(false);
+            radiation_level.setVisible(true);
         });
 
         ButtonGroup group_type = new ButtonGroup();
@@ -129,7 +183,7 @@ public class Frame extends JFrame {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cardLayout.next(content);
+                cardLayout_content.next(content);
                 label.setText(listContent[(indice + 1) % 3]);
                 indice += 1;
 
@@ -189,12 +243,11 @@ public class Frame extends JFrame {
         button_panel.add(button4, BorderLayout.CENTER);
 
 
-        content.setLayout(cardLayout);
+        content.setLayout(cardLayout_content);
 
         content.add(batiment_panel, listContent[0]);
-        content.add(type_panel, listContent[1]);
+        content.add(main_type_panel, listContent[1]);
         content.add(niv_panel, listContent[2]);
-
 
         this.getContentPane().add(button_panel, BorderLayout.SOUTH);
         this.getContentPane().add(title_panel, BorderLayout.NORTH);

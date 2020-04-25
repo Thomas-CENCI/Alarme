@@ -7,9 +7,8 @@ public class Alarme {
 
         JOptionPane message = new JOptionPane();
 
-
         if (val > valmax){
-            message.showMessageDialog(null, "Une alarme à detecter une anomalie", "Alert", JOptionPane.WARNING_MESSAGE);
+            message.showMessageDialog(null, "Une alarme a detecté une anomalie", "Alerte", JOptionPane.WARNING_MESSAGE);
         }
         else{
             message.showMessageDialog(null, "Tudo ben", "Information", JOptionPane.INFORMATION_MESSAGE);
