@@ -12,13 +12,15 @@ public class Frame extends JFrame {
     JPanel content = new JPanel();
     JLabel label = new JLabel("Bâtiment");
     String[] listContent = {"Type d'alarme", "Niveau d'importance", "Bâtiment"};
+    ArrayList<Moniteur> moniteurs = new ArrayList<Moniteur>();
     int indice = -1;
 
-    public Frame() {
+    public Frame(ArrayList<Moniteur> moniteurs) {
         this.setTitle("Alarme");
         this.setSize(600, 350);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.moniteurs = moniteurs;
 
         JPanel title_panel = new JPanel();
         title_panel.setBackground(Color.ORANGE);
@@ -144,8 +146,9 @@ public class Frame extends JFrame {
                     selectedValues.add(valueOfSelectedElement(typeButtons).toUpperCase());
                     selectedValues.add(valueOfSelectedElement(nivButtons).toUpperCase());
                     dispose();
-                    System.out.println(selectedValues); /** Au lieu de print les valeurs il faudrait appeler une fonction qui génère l'anomalie
-                                                            avec autant de détail que ce qui est sélectionné (Voir Moniteur.generateAnomalie). */
+                    for(Moniteur moniteur : moniteurs) {
+                        moniteur.generateAnomalie(selectedValues.get(0), selectedValues.get(1), Integer.parseInt(selectedValues.get(2)));
+                    }
                 }
                 else{
                     lackOfValues.showMessageDialog(null, "Il manque des éléments dans la séléction des valeurs", "Information", JOptionPane.ERROR_MESSAGE);

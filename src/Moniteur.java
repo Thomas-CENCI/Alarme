@@ -12,15 +12,21 @@ public class Moniteur {
         this.alarmList.remove(alarme);
     }
 
-    public void generateAnomalie(String type) {
+    public void generateAnomalie(String localisation, String type, int defcon) {
         if (type.toUpperCase().equals("INCENDIE")) {
             anomalie = new Incendie(this);
+            anomalie.setLocalisation(localisation);
+            anomalie.setDefcon(defcon);
         }
         if (type.toUpperCase().equals("RADIATION")) {
-             anomalie = new Radiation(this);
+            anomalie = new Radiation(this);
+            anomalie.setLocalisation(localisation);
+            anomalie.setDefcon(defcon);
         }
         if (type.toUpperCase().equals("GAZ")) {
             anomalie = new Gaz(this);
+            anomalie.setLocalisation(localisation);
+            anomalie.setDefcon(defcon);
         }
 
         for (Alarme a : alarmList){

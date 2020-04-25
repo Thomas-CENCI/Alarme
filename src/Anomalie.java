@@ -13,4 +13,7 @@ public abstract class Anomalie extends EventObject {
         this.defcon = 3;
     }
     abstract int seuil();
+    abstract void setDate(GregorianCalendar date);
+    abstract void setLocalisation(String localisation);
+    abstract void setDefcon(int defcon);
 }
