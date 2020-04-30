@@ -23,7 +23,48 @@ public class Frame extends JFrame {
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.moniteurs = moniteurs;
+    }
 
+    public Frame(Frame f, ArrayList<HashMap<String, String>> anomalies){
+        this.setSize(350, 100);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(null);
+        this.setTitle("Génération d'anomalie");
+
+        JPanel content = new JPanel();
+        content.setBackground(Color.DARK_GRAY);
+
+        JButton generer = new JButton("Générer une anomalie");
+        JButton fermer = new JButton("Fermer");
+
+        final HashMap<String, String>[] result = new HashMap[]{new HashMap<String, String>()};
+
+        generer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                result[0] = f.generate();
+                System.out.println("in" + result[0]);
+                while(!(result[0].isEmpty())) {
+                    anomalies.add(f.generate());
+                    System.out.println(anomalies);
+                }
+            }
+        });
+
+        fermer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+
+        content.add(generer);
+        content.add(fermer);
+        this.getContentPane().add(content);
+        this.setVisible(true);
+    }
+
+    public HashMap<String, String> generate(){
         JPanel title_panel = new JPanel();
         title_panel.setBackground(Color.ORANGE);
 
@@ -90,6 +131,7 @@ public class Frame extends JFrame {
             public void focusGained(FocusEvent e) {
                 type_detail.setText("");
             }
+
             public void focusLost(FocusEvent e) {
             }
         });
@@ -167,11 +209,9 @@ public class Frame extends JFrame {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(((indice + 1) % 3 == 1) && atLeastOneIsSelected(typeButtons) && !(valueOfSelectedElement(typeButtons).equals("Incendie")) && !(isDetailedType(type_detail))) {
+                if (((indice + 1) % 3 == 1) && atLeastOneIsSelected(typeButtons) && !(valueOfSelectedElement(typeButtons).equals("Incendie")) && !(isDetailedType(type_detail))) {
                     lackOfDetail.showMessageDialog(null, "Merci de renseigner les détails à propos du type d'anomalie", "Attention", JOptionPane.WARNING_MESSAGE);
-                }
-
-                else {
+                } else {
                     cardLayout_content.next(content);
                     label.setText(listContent[(indice + 1) % 3]);
                     indice += 1;
@@ -181,25 +221,22 @@ public class Frame extends JFrame {
         });
 
         JButton button2 = new JButton("Valider");
-        HashMap<String, String> selectedValues = new HashMap<String, String>();
         JOptionPane lackOfValues = new JOptionPane();
+        HashMap<String, String> selectedValues = new HashMap<String, String>();
         button2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
-                if(atLeastOneIsSelected(batButtons) && atLeastOneIsSelected(typeButtons) && atLeastOneIsSelected(nivButtons)) {
+                if (atLeastOneIsSelected(batButtons) && atLeastOneIsSelected(typeButtons) && atLeastOneIsSelected(nivButtons)) {
                     selectedValues.put("batiment", valueOfSelectedElement(batButtons).toUpperCase());
                     selectedValues.put("type_anomalie", valueOfSelectedElement(typeButtons).toUpperCase());
                     selectedValues.put("niveau_importance", valueOfSelectedElement(nivButtons).toUpperCase());
-                    System.out.println(!(selectedValues.get("batiment").equals("INCENDIE")));
-                    if(isDetailedType(type_detail)) {
+                    if (isDetailedType(type_detail)) {
                         selectedValues.put("detail_type", type_detail.getText().toUpperCase());
                     }
-                    System.out.println(selectedValues);
                     dispose();
-                    for(Moniteur moniteur : moniteurs) {
+                    for (Moniteur moniteur : moniteurs) {
                         moniteur.generateAnomalie(selectedValues.get("batiment"), selectedValues.get("type_anomalie"), Integer.parseInt(selectedValues.get("niveau_importance")));
                     }
-                }
-                else{
+                } else {
                     lackOfValues.showMessageDialog(null, "Il manque des éléments dans la séléction des valeurs", "Information", JOptionPane.ERROR_MESSAGE);
                 }
             }
@@ -226,9 +263,9 @@ public class Frame extends JFrame {
 
         JButton button4 = new JButton("Fermer");
         button4.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
-              dispose();
-          }
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
         });
 
         title_panel.add(label, BorderLayout.NORTH);
@@ -248,6 +285,8 @@ public class Frame extends JFrame {
         this.getContentPane().add(title_panel, BorderLayout.NORTH);
         this.getContentPane().add(content, BorderLayout.CENTER);
         this.setVisible(true);
+
+        return(selectedValues);
     }
 
     private boolean atLeastOneIsSelected(ArrayList<AbstractButton> buttonList){
@@ -269,7 +308,7 @@ public class Frame extends JFrame {
     }
 
     private boolean isDetailedType(JTextField textField){
-        if(textField.getText().equals("Type de gaz émis") || textField.getText().equals("Niveau de radiation (1 - 100)")){
+        if(textField.getText().equals("") || textField.getText().equals("Type de gaz émis") || textField.getText().equals("Niveau de radiation (1 - 100)")){
             return false;
         }
     return true;
