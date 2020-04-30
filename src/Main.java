@@ -10,15 +10,11 @@ public class Main{
 
     public static void main(String[] args) throws InterruptedException {
 
-        Moniteur m1 = new Moniteur("A");
-        m1.addAlarmListener(new Alarme("gaz", "salle1"));
-        m1.addAlarmListener(new Alarme("incendie", "salle2"));
+        Moniteur m1 = new Moniteur();
+        m1.addAlarmListener(new Alarme());
 
-
-        Moniteur m2 = new Moniteur("B");
-        m2.addAlarmListener(new Alarme("incendie", "salle2"));
-        m2.addAlarmListener(new Alarme("radiation", "salle3"));
-
+        Moniteur m2 = new Moniteur();
+        m2.addAlarmListener(new Alarme());
 
         ArrayList<Moniteur> moniteurs = new ArrayList<Moniteur>();
         moniteurs.add(m1);
@@ -27,6 +23,8 @@ public class Main{
         ArrayList<HashMap<String, String>> anomalies = new ArrayList<HashMap<String, String>>();
 
         Frame frame = new Frame(moniteurs);
-        Frame g = new Frame(frame, anomalies);
+        FrameAccueil g = new FrameAccueil(frame, anomalies, moniteurs);
+
+        g.generate_button();
     }
 }

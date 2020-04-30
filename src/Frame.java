@@ -25,45 +25,6 @@ public class Frame extends JFrame {
         this.moniteurs = moniteurs;
     }
 
-    public Frame(Frame f, ArrayList<HashMap<String, String>> anomalies){
-        this.setSize(350, 100);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLocationRelativeTo(null);
-        this.setTitle("Génération d'anomalie");
-
-        JPanel content = new JPanel();
-        content.setBackground(Color.DARK_GRAY);
-
-        JButton generer = new JButton("Générer une anomalie");
-        JButton fermer = new JButton("Fermer");
-
-        final HashMap<String, String>[] result = new HashMap[]{new HashMap<String, String>()};
-
-        generer.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                result[0] = f.generate();
-                System.out.println("in" + result[0]);
-                while(!(result[0].isEmpty())) {
-                    anomalies.add(f.generate());
-                    System.out.println(anomalies);
-                }
-            }
-        });
-
-        fermer.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-            }
-        });
-
-        content.add(generer);
-        content.add(fermer);
-        this.getContentPane().add(content);
-        this.setVisible(true);
-    }
-
     public HashMap<String, String> generate(){
         JPanel title_panel = new JPanel();
         title_panel.setBackground(Color.ORANGE);
