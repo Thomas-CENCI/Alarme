@@ -9,6 +9,10 @@ public class Moniteur {
         this.type_moniteur = type;
     }
 
+    public ArrayList<Alarme> getAlarmes(){
+        return this.alarmList;
+    }
+
     public void addAlarmListener(Alarme alarme){
         this.alarmList.add(alarme);
     }
@@ -18,6 +22,7 @@ public class Moniteur {
     }
 
     public void generateAnomalie(String localisation, String type, int defcon) {
+        System.out.println(localisation+type+defcon+"OK");
         if (type.toUpperCase().equals("INCENDIE")) {
             anomalie = new Incendie(this);
             anomalie.setLocalisation(localisation);
@@ -35,14 +40,13 @@ public class Moniteur {
         }
 
         for (Alarme alarme : alarmList){
-            if (alarme.getType().equals(type) && alarme.getLocalisation().equals(localisation)){
+            if (alarme.getType().toUpperCase().equals(type.toUpperCase()) && alarme.getLocalisation().toUpperCase().equals(localisation.toUpperCase())){
                 boolean exist = false;
                 for (Anomalie ano : alarme.getAnomalies()){
                     if (ano.getDate().equals(anomalie.getDate())){
                         exist = true;
                     }
                 }
-
                 if (!exist){
                     alarme.addAnomalie(anomalie);
                     alarme.testSeuil(anomalie.seuil());         

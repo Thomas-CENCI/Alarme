@@ -11,13 +11,13 @@ public class Main{
     public static void main(String[] args) throws InterruptedException {
 
         Moniteur m1 = new Moniteur("A");
-        m1.addAlarmListener(new Alarme("gaz", "salle1"));
-        m1.addAlarmListener(new Alarme("incendie", "salle2"));
+        m1.addAlarmListener(new Alarme("gaz", "bâtiment1"));
+        m1.addAlarmListener(new Alarme("incendie", "bâtiment2"));
 
 
         Moniteur m2 = new Moniteur("B");
-        m2.addAlarmListener(new Alarme("incendie", "salle2"));
-        m2.addAlarmListener(new Alarme("radiation", "salle3"));
+        m2.addAlarmListener(new Alarme("incendie", "bâtiment2"));
+        m2.addAlarmListener(new Alarme("radiation", "bâtiment3"));
 
 
         ArrayList<Moniteur> moniteurs = new ArrayList<Moniteur>();
