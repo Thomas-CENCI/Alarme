@@ -16,4 +16,5 @@ public abstract class Anomalie extends EventObject {
     abstract void setDate(GregorianCalendar date);
     abstract void setLocalisation(String localisation);
     abstract void setDefcon(int defcon);
+    abstract GregorianCalendar getDate();
 }

@@ -23,6 +23,8 @@ public class Gaz extends Anomalie {
         this.defcon = defcon;
     }
 
+    public GregorianCalendar getDate(){return this.date;}
+
     public int seuil(){
        return 100;
     }
