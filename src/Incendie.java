@@ -17,7 +17,7 @@ public class Incendie extends Anomalie {
     public void setDefcon(int defcon){
         this.defcon = defcon;
     }
-
+    
     public GregorianCalendar getDate(){return this.date;}
 
     public int seuil(){

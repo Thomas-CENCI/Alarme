@@ -19,7 +19,6 @@ public class Main{
         m2.addAlarmListener(new Alarme("incendie", "bâtiment2"));
         m2.addAlarmListener(new Alarme("radiation", "bâtiment3"));
 
-
         ArrayList<Moniteur> moniteurs = new ArrayList<Moniteur>();
         moniteurs.add(m1);
         moniteurs.add(m2);
@@ -27,6 +26,8 @@ public class Main{
         ArrayList<HashMap<String, String>> anomalies = new ArrayList<HashMap<String, String>>();
 
         Frame frame = new Frame(moniteurs);
-        Frame g = new Frame(frame, anomalies);
+        FrameAccueil g = new FrameAccueil(frame, anomalies, moniteurs);
+
+        g.generate_button();
     }
 }

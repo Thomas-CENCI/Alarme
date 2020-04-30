@@ -22,7 +22,6 @@ public class Moniteur {
     }
 
     public void generateAnomalie(String localisation, String type, int defcon) {
-        System.out.println(localisation+type+defcon+"OK");
         if (type.toUpperCase().equals("INCENDIE")) {
             anomalie = new Incendie(this);
             anomalie.setLocalisation(localisation);
@@ -51,8 +50,6 @@ public class Moniteur {
                     alarme.addAnomalie(anomalie);
                     alarme.testSeuil(anomalie.seuil());         
                 }
-
-
             }
         }
     }
