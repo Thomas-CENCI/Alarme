@@ -25,7 +25,7 @@ public class Frame extends JFrame {
         this.moniteurs = moniteurs;
     }
 
-    public HashMap<String, String> generate(){
+    public HashMap<String, String> generate() {
         JPanel title_panel = new JPanel();
         title_panel.setBackground(Color.ORANGE);
 
@@ -246,6 +246,12 @@ public class Frame extends JFrame {
         this.getContentPane().add(title_panel, BorderLayout.NORTH);
         this.getContentPane().add(content, BorderLayout.CENTER);
         this.setVisible(true);
+
+        for(Moniteur moniteur : moniteurs){
+            for(Alarme alarme : moniteur.getAlarmes()){
+                System.out.println(alarme.getAnomalies());
+            }
+        }
 
         return(selectedValues);
     }

@@ -25,9 +25,15 @@ public class Main{
 
         ArrayList<HashMap<String, String>> anomalies = new ArrayList<HashMap<String, String>>();
 
-        Frame frame = new Frame(moniteurs);
-        FrameAccueil g = new FrameAccueil(frame, anomalies, moniteurs);
+        Frame frame_generate = new Frame(moniteurs);
+        FrameAccueil frame_accueil = new FrameAccueil(frame_generate, anomalies, moniteurs);
 
-        g.generate_button();
+        FrameMoniteur frame_moniteur_A = new FrameMoniteur();
+        frame_moniteur_A.display_moniteur(m1);
+
+        FrameMoniteur frame_moniteur_B = new FrameMoniteur();
+        frame_moniteur_B.display_moniteur(m2);
+
+        frame_accueil.generate_button();
     }
 }
