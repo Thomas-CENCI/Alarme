@@ -30,9 +30,11 @@ public class Main{
 
         FrameMoniteur frame_moniteur_A = new FrameMoniteur();
         frame_moniteur_A.display_moniteur(m1);
+        m1.setFrame(frame_moniteur_A);
 
         FrameMoniteur frame_moniteur_B = new FrameMoniteur();
         frame_moniteur_B.display_moniteur(m2);
+        m2.setFrame(frame_moniteur_B);
 
         frame_accueil.generate_button();
     }

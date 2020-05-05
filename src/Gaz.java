@@ -7,7 +7,9 @@ public class Gaz extends Anomalie {
         super(source);
     }
 
-    public void setType(String type) {
+    public void setType(String type) { this.type = type; }
+
+    public void setTypeGaz(String type) {
         this.type = type;
     }
 
@@ -15,8 +17,8 @@ public class Gaz extends Anomalie {
         this.date = date;
     }
 
-    public void setLocalisation(String localisation){
-        this.localisation = localisation;
+    public void setLocation(String location){
+        this.location = location;
     }
 
     public void setDefcon(int defcon){
@@ -24,6 +26,8 @@ public class Gaz extends Anomalie {
     }
 
     public GregorianCalendar getDate(){return this.date;}
+
+    public String getType() { return this.type; }
 
     public int seuil(){
        return 100;

@@ -3,12 +3,12 @@ import java.util.*;
 
 public class Alarme {
     private ArrayList<Anomalie> anomaliesList = new ArrayList<Anomalie>();
-    private String localisation;
+    private String location;
     private String type;
 
-    public Alarme(String type, String localisation){
+    public Alarme(String type, String location){
         this.type = type;
-        this.localisation = localisation;
+        this.location = location;
     }
 
     public void addAnomalie(Anomalie anomalie){this.anomaliesList.add(anomalie);}
@@ -17,7 +17,7 @@ public class Alarme {
 
     public String getType(){return this.type;}
 
-    public String getLocalisation(){return this.localisation;}
+    public String getLocation(){return this.location;}
 
     public ArrayList<Anomalie> getAnomalies(){return this.anomaliesList;}
 

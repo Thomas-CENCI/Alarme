@@ -9,19 +9,19 @@ public class FrameMoniteur extends JFrame {
     ArrayList<Anomalie> anomalie_reçues = new ArrayList<Anomalie>(); /** Il faut trouver un moyen de remplir cette
                                                                        * liste avec les anomalies générées.
                                                                        * Je pensais mettre un Listener qui permettrait
-                                                                       * de mettre à jour la JFrame et afficherait
-                                                                       * la nouvelle anomalie dans un pop up (sujet).
+                                                                       * de mettre à jour la JFrame.. A voir.
                                                                        */
     ArrayList<Anomalie> anomalie_traitees = new ArrayList<Anomalie>();
 
     public FrameMoniteur() {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        this.setUndecorated(true);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     public void display_moniteur(Moniteur moniteur){
+        this.setTitle("Moniteur " + moniteur.type_moniteur);
+
         Font police_title = new Font("Tahoma", Font.BOLD, 20);
 
         JPanel title_panel = new JPanel();
@@ -38,10 +38,7 @@ public class FrameMoniteur extends JFrame {
         JOptionPane confirmation = new JOptionPane();
 
         JSplitPane splitContent = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-        splitContent.setResizeWeight(0.43); /**
-                                              * Aucunes idées pour positionner le Divider au milieu de l'écran.
-                                              * J'ai essayé avec 0.5 (50%) mais ca ne me le met pas au milieu...
-                                              */
+        splitContent.setResizeWeight(0.43);
 
         JPanel button_panel = new JPanel();
         button_panel.setBackground(Color.DARK_GRAY);
@@ -80,7 +77,7 @@ public class FrameMoniteur extends JFrame {
             }
         });
 
-        JButton traitee_button = new JButton("Traitée");
+        JButton traitee_button = new JButton("Traiter");
         traitee_button.setVisible(false);
         traitee_button.addActionListener(new ActionListener() {
             @Override
@@ -93,7 +90,6 @@ public class FrameMoniteur extends JFrame {
                 confirm = confirmation.showConfirmDialog(null, "L'anomalie est-elle traitée ?", "Confirmation de traitement", JOptionPane.YES_NO_OPTION);
                 if(confirm == 0){
                     traitee_button.setVisible(false);
-                    System.out.println("done");
                 }
             }
         });

@@ -6,6 +6,7 @@ public class Radiation extends Anomalie {
     public Radiation(Object source) {
         super(source);
     }
+    public void setType(String type) { this.type = type; }
 
     public void setRadiation_lvl(int radiation_lvl) {
         this.radiation_lvl = radiation_lvl;
@@ -15,8 +16,8 @@ public class Radiation extends Anomalie {
         this.date = date;
     }
 
-    public void setLocalisation(String localisation){
-        this.localisation = localisation;
+    public void setLocation(String location){
+        this.location = location;
     }
 
     public void setDefcon(int defcon){
@@ -24,6 +25,8 @@ public class Radiation extends Anomalie {
     }
     
     public GregorianCalendar getDate(){return this.date;}
+
+    public String getType() { return this.type; }
 
     public int seuil(){
         return 10000;
