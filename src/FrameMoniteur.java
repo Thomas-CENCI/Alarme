@@ -6,18 +6,22 @@ import java.util.ArrayList;
 
 public class FrameMoniteur extends JFrame {
 
-    ArrayList<Anomalie> anomalie_reçues = new ArrayList<Anomalie>(); /** Il faut trouver un moyen de remplir cette
+    ArrayList<Anomalie> anomalies_recues = new ArrayList<Anomalie>(); /** Il faut trouver un moyen de remplir cette
                                                                        * liste avec les anomalies générées.
                                                                        * Je pensais mettre un Listener qui permettrait
                                                                        * de mettre à jour la JFrame.. A voir.
                                                                        */
-    ArrayList<Anomalie> anomalie_traitees = new ArrayList<Anomalie>();
+    ArrayList<Anomalie> anomalies_traitees = new ArrayList<Anomalie>();
 
     public FrameMoniteur() {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
+
+    public void addAnomalie_reçues(Anomalie anomalie) { anomalies_recues.add(anomalie); }
+
+    public void addAnomalie_traitees(Anomalie anomalie) { anomalies_recues.remove(anomalie); anomalies_traitees.add(anomalie); }
 
     public void display_moniteur(Moniteur moniteur){
         this.setTitle("Moniteur " + moniteur.type_moniteur);
