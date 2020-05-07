@@ -4,14 +4,11 @@ import java.util.ArrayList;
 public class Moniteur {
     ArrayList<Alarme> alarmList = new ArrayList<Alarme>();
     private Anomalie anomalie;
-    FrameMoniteur frame;
     public String type_moniteur;
 
     public Moniteur(String type){
         this.type_moniteur = type;
     }
-
-    public void setFrame(FrameMoniteur fm) { this.frame = fm; }
 
     public ArrayList<Alarme> getAlarmes(){
         return this.alarmList;

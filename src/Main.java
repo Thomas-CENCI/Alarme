@@ -1,8 +1,3 @@
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -30,12 +25,15 @@ public class Main{
 
         FrameMoniteur frame_moniteur_A = new FrameMoniteur();
         frame_moniteur_A.display_moniteur(m1);
-        m1.setFrame(frame_moniteur_A);
 
         FrameMoniteur frame_moniteur_B = new FrameMoniteur();
         frame_moniteur_B.display_moniteur(m2);
-        m2.setFrame(frame_moniteur_B);
 
         frame_accueil.generate_button();
+
+        Statistics stats = new Statistics(moniteurs);
+        
+        Thread.sleep(30000); /** Il faut que toutes les fenêtres soient fermées pour que les stats "fonctionnent" */
+        System.out.println("\nNombre : " + stats.numberOfAnomalie() + "\nTypes : " + stats.typesOfAnomalie() + "\nDefcon moyen : " + stats.meanDefcon());
     }
 }

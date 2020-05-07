@@ -24,6 +24,8 @@ public class Incendie extends Anomalie {
 
     public String getType() { return this.type; }
 
+    public int getDefcon() { return this.defcon; }
+
     public int seuil(){
         return 10;
     }
