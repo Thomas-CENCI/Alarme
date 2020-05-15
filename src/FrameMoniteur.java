@@ -25,11 +25,13 @@ public class FrameMoniteur extends JFrame {
     public void tri_anomalies(){
         for (Alarme alarme : moniteur.getAlarmes()){
             for (Anomalie anomalie : alarme.getAnomalies()){
-                if (anomalie.getStatus() == false){
-                    this.addAnomalie_reçues(anomalie);
-                }
-                else{
-                    this.addAnomalie_traitees(anomalie);
+                if (!this.anomalies_recues.contains(anomalie)){
+                    if (anomalie.getStatus() == false){
+                        this.addAnomalie_reçues(anomalie);
+                    }
+                    else{
+                        this.addAnomalie_traitees(anomalie);
+                    }
                 }
             }
         }
@@ -39,7 +41,9 @@ public class FrameMoniteur extends JFrame {
 
     public void addAnomalie_traitees(Anomalie anomalie) { anomalies_recues.remove(anomalie); anomalies_traitees.add(anomalie); }
 
+
     public void display_moniteur(Moniteur moniteur){
+
         this.setTitle("Moniteur " + moniteur.type_moniteur);
 
         Font police_title = new Font("Tahoma", Font.BOLD, 20);
@@ -80,9 +84,29 @@ public class FrameMoniteur extends JFrame {
 
         left_panel.add(left_title, gbc);
 
-        JTable table = new JTable(new DefaultTableModel(new Object[][]{}, new Object[]{"Type", "Date", "Location", "Status"}));
+        // JTable table = new JTable(new DefaultTableModel(new Object[][]{}, new Object[]{"Type", "Date", "Location", "Status"}));
 
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        // DefaultTableModel model = (DefaultTableModel) table.getModel();
+
+        // String [] header={"Type", "Date", "Location", "Status"};
+        // String [][] data={};
+        // DefaultTableModel model = new DefaultTableModel(data, header); 
+        // JTable table = new JTable(model);
+
+        // model.addRow(new Object[]{"Type", "Date", "Location", "Status"});
+
+        String [] header={"Type", "Date", "Location", "Status"};
+        String [][] data={};
+
+        DefaultTableModel model = new DefaultTableModel(data,header);
+
+        JTable table = new JTable(model);
+
+        table.setPreferredScrollableViewportSize(new Dimension(450,63));
+        table.setFillsViewportHeight(true);
+
+        JScrollPane js = new JScrollPane(table);
+        js.setVisible(true);
 
         for (Anomalie a : this.anomalies_recues){
             model.addRow(new Object[]{a.getType(), a.getDate(), a.getLocation(), a.getStatus()} );
@@ -95,11 +119,11 @@ public class FrameMoniteur extends JFrame {
         // };
         //create table with data
         gbc.gridy = 1;
-        left_panel.add(table, gbc);
+        left_panel.add(js, gbc);
 
-        for (Anomalie a : this.anomalies_recues){
-            left_panel.add(new JLabel(a.getType()));
-        }
+        this.tri_anomalies();
+
+        System.out.println(this.anomalies_recues+" COUCOU");
 
         left_panel.setBackground(Color.DARK_GRAY);
         left_title.setFont(police);
@@ -164,18 +188,8 @@ public class FrameMoniteur extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 left_panel.removeAll();
-                left_panel.add(left_title, gbc);
-
-                for (Anomalie a : anomalies_recues){
-                    model.addRow(new Object[]{a.getType(), a.getDate(), a.getLocation(), a.getStatus()} );
-                }
-                gbc.gridy = 1;
-                left_panel.add(table, gbc);
-                for (Anomalie a : anomalies_recues){
-                    left_panel.add(new JLabel(a.getType()));
-                }
-                FrameMoniteur.this.revalidate();
-                FrameMoniteur.this.repaint();
+                right_panel.removeAll();
+                FrameMoniteur.this.display_moniteur(FrameMoniteur.this.moniteur);
             }
         });
 
