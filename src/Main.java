@@ -5,29 +5,29 @@ public class Main{
 
     public static void main(String[] args) throws InterruptedException {
 
-        Moniteur m1 = new Moniteur("A");
-        m1.addAlarmListener(new Alarme("gaz", "bâtiment1"));
-        m1.addAlarmListener(new Alarme("incendie", "bâtiment2"));
+        Moniteur mA = new Moniteur("A");
+        mA.addAlarmListener(new Alarme("gaz", "bâtiment1"));
+        mA.addAlarmListener(new Alarme("incendie", "bâtiment2"));
 
 
-        Moniteur m2 = new Moniteur("B");
-        m2.addAlarmListener(new Alarme("incendie", "bâtiment2"));
-        m2.addAlarmListener(new Alarme("radiation", "bâtiment3"));
+        Moniteur mB = new Moniteur("B");
+        mB.addAlarmListener(new Alarme("incendie", "bâtiment2"));
+        mB.addAlarmListener(new Alarme("radiation", "bâtiment3"));
 
         ArrayList<Moniteur> moniteurs = new ArrayList<Moniteur>();
-        moniteurs.add(m1);
-        moniteurs.add(m2);
+        moniteurs.add(mA);
+        moniteurs.add(mB);
 
         ArrayList<HashMap<String, String>> anomalies = new ArrayList<HashMap<String, String>>();
 
         Frame frame_generate = new Frame(moniteurs);
         FrameAccueil frame_accueil = new FrameAccueil(frame_generate, anomalies, moniteurs);
 
-        FrameMoniteur frame_moniteur_A = new FrameMoniteur();
-        frame_moniteur_A.display_moniteur(m1);
+        FrameMoniteur frame_moniteur_A = new FrameMoniteur(mA);
+        frame_moniteur_A.display_moniteur(mA);
 
-        FrameMoniteur frame_moniteur_B = new FrameMoniteur();
-        frame_moniteur_B.display_moniteur(m2);
+        FrameMoniteur frame_moniteur_B = new FrameMoniteur(mB);
+        frame_moniteur_B.display_moniteur(mB);
 
         frame_accueil.generate_button();
 

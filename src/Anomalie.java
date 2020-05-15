@@ -6,6 +6,7 @@ public abstract class Anomalie extends EventObject {
     String type;
     String location;
     int defcon;
+    boolean status = false;
 
     public Anomalie(Object source) {
         super(source);
@@ -18,5 +19,7 @@ public abstract class Anomalie extends EventObject {
     abstract void setDefcon(int defcon);
     abstract GregorianCalendar getDate();
     abstract String getType();
+    abstract boolean getStatus();
+    abstract String getLocation();
     abstract int getDefcon();
 }

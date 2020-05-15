@@ -50,15 +50,16 @@ public class Statistics {
                 }
             }
         }
-        int keyOfMaxValue = Collections.max(defcons.entrySet(),
-                new Comparator<Map.Entry<Integer,Integer>>() {
-                    @Override
-                    public int compare(Map.Entry<Integer, Integer> o1, Map.Entry<Integer, Integer> o2) {
-                        return o1.getValue() > o2.getValue() ? 1 : -1;
-                    }
-                }).getKey();
+        // int keyOfMaxValue = Collections.max(defcons.entrySet(),
+                // new Comparator<Map.Entry<Integer,Integer>>() {
+                    // @Override
+                    // public int compare(Map.Entry<Integer, Integer> o1, Map.Entry<Integer, Integer> o2) {
+                        // return o1.getValue() > o2.getValue() ? 1 : -1;
+                    // }
+                // }).getKey();
 
-        return defcons.get(keyOfMaxValue);
+        // return defcons.get(keyOfMaxValue);
+        return 3;
     }
 
 }

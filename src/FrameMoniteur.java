@@ -3,8 +3,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import javax.swing.table.*;
 
 public class FrameMoniteur extends JFrame {
+    private Moniteur moniteur;
 
     ArrayList<Anomalie> anomalies_recues = new ArrayList<Anomalie>(); /** Il faut trouver un moyen de remplir cette
                                                                        * liste avec les anomalies générées.
@@ -13,10 +15,24 @@ public class FrameMoniteur extends JFrame {
                                                                        */
     ArrayList<Anomalie> anomalies_traitees = new ArrayList<Anomalie>();
 
-    public FrameMoniteur() {
+    public FrameMoniteur(Moniteur moniteur) {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.moniteur = moniteur;
+    }
+
+    public void tri_anomalies(){
+        for (Alarme alarme : moniteur.getAlarmes()){
+            for (Anomalie anomalie : alarme.getAnomalies()){
+                if (anomalie.getStatus() == false){
+                    this.addAnomalie_reçues(anomalie);
+                }
+                else{
+                    this.addAnomalie_traitees(anomalie);
+                }
+            }
+        }
     }
 
     public void addAnomalie_reçues(Anomalie anomalie) { anomalies_recues.add(anomalie); }
@@ -50,9 +66,40 @@ public class FrameMoniteur extends JFrame {
         JPanel left_panel = new JPanel();
         left_panel.setBackground(Color.DARK_GRAY);
 
+        left_panel.setLayout(new GridBagLayout());
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.weightx = 0.1;
+        gbc.weighty = 0.1;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+
         JLabel left_title = new JLabel("Anomalies reçues et non traitées");
         left_title.setForeground(Color.WHITE);
-        left_panel.add(left_title, BorderLayout.NORTH);
+
+        left_panel.add(left_title, gbc);
+
+        JTable table = new JTable(new DefaultTableModel(new Object[][]{}, new Object[]{"Type", "Date", "Location", "Status"}));
+
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+
+        for (Anomalie a : this.anomalies_recues){
+            model.addRow(new Object[]{a.getType(), a.getDate(), a.getLocation(), a.getStatus()} );
+        }
+
+        // Object[][] data = new Object[][] {
+        // 	{1, "John", 40.0, false },
+        // 	{2, "Rambo", 70.0, false },
+        // 	{3, "Zorro", 60.0, true },
+        // };
+        //create table with data
+        gbc.gridy = 1;
+        left_panel.add(table, gbc);
+
+        for (Anomalie a : this.anomalies_recues){
+            left_panel.add(new JLabel(a.getType()));
+        }
 
         left_panel.setBackground(Color.DARK_GRAY);
         left_title.setFont(police);
@@ -112,9 +159,30 @@ public class FrameMoniteur extends JFrame {
             }
         });
 
+        JButton refresh_button = new JButton("Refresh");
+        refresh_button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                left_panel.removeAll();
+                left_panel.add(left_title, gbc);
+
+                for (Anomalie a : anomalies_recues){
+                    model.addRow(new Object[]{a.getType(), a.getDate(), a.getLocation(), a.getStatus()} );
+                }
+                gbc.gridy = 1;
+                left_panel.add(table, gbc);
+                for (Anomalie a : anomalies_recues){
+                    left_panel.add(new JLabel(a.getType()));
+                }
+                FrameMoniteur.this.revalidate();
+                FrameMoniteur.this.repaint();
+            }
+        });
+
         button_panel.add(detail_button);
         button_panel.add(close_button);
         button_panel.add(traitee_button);
+        button_panel.add(refresh_button);
 
         this.getContentPane().add(title_panel, BorderLayout.NORTH);
         this.getContentPane().add(splitContent, BorderLayout.CENTER);

@@ -29,6 +29,10 @@ public class Gaz extends Anomalie {
 
     public String getType() { return this.type; }
 
+    public boolean getStatus() {return this.status; }
+
+    public String getLocation() {return this.location; }
+
     public int getDefcon() { return this.defcon; }
 
     public int seuil(){
