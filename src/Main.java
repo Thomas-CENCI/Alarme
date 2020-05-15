@@ -8,11 +8,12 @@ public class Main{
         Moniteur mA = new Moniteur("A");
         mA.addAlarmListener(new Alarme("gaz", "bâtiment1"));
         mA.addAlarmListener(new Alarme("incendie", "bâtiment2"));
-
+        mA.addAlarmListener(new Alarme("radiation", "bâtiment4"));
 
         Moniteur mB = new Moniteur("B");
         mB.addAlarmListener(new Alarme("incendie", "bâtiment2"));
         mB.addAlarmListener(new Alarme("radiation", "bâtiment3"));
+        mB.addAlarmListener(new Alarme("gaz", "bâtiment4"));
 
         ArrayList<Moniteur> moniteurs = new ArrayList<Moniteur>();
         moniteurs.add(mA);
@@ -23,11 +24,8 @@ public class Main{
         Frame frame_generate = new Frame(moniteurs);
         FrameAccueil frame_accueil = new FrameAccueil(frame_generate, anomalies, moniteurs);
 
-        FrameMoniteur frame_moniteur_A = new FrameMoniteur(mA);
-        frame_moniteur_A.display_moniteur(mA);
-
-        FrameMoniteur frame_moniteur_B = new FrameMoniteur(mB);
-        frame_moniteur_B.display_moniteur(mB);
+        FrameMoniteur frame_moniteur = new FrameMoniteur(mA, mB);
+        frame_moniteur.display_moniteur(mA, mB);
 
         frame_accueil.generate_button();
 

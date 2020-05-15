@@ -59,7 +59,7 @@ public class Statistics {
                 // }).getKey();
 
         // return defcons.get(keyOfMaxValue);
-        return 3;
+        return -1;
     }
 
 }
