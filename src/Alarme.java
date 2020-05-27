@@ -8,6 +8,7 @@ public abstract class Alarme extends EventObject {
     int defcon;
     String detail;
     boolean status = false;
+    String detail;
 
     public Alarme(Object source) {
         super(source);

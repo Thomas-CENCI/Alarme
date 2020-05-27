@@ -75,17 +75,17 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
 
         left_panel_A.setLayout(new GridBagLayout());
 
-        GridBagConstraints gbc_A = new GridBagConstraints();
-        gbc_A.anchor = GridBagConstraints.NORTH;
-        gbc_A.weightx = 0.1;
-        gbc_A.weighty = 0.1;
-        gbc_A.gridx = 0;
-        gbc_A.gridy = 0;
+        GridBagConstraints left_gbc_A = new GridBagConstraints();
+        left_gbc_A.anchor = GridBagConstraints.NORTH;
+        left_gbc_A.weightx = 0.1;
+        left_gbc_A.weighty = 0.1;
+        left_gbc_A.gridx = 0;
+        left_gbc_A.gridy = 0;
 
-        JLabel left_title_A = new JLabel("Anomalies reçues et non traitées (A)");
+        JLabel left_title_A = new JLabel("Alarmes reçues et non traitées (A)");
         left_title_A.setForeground(Color.WHITE);
 
-        left_panel_A.add(left_title_A, gbc_A);
+        left_panel_A.add(left_title_A, left_gbc_A);
 
         // JTable table = new JTable(new DefaultTableModel(new Object[][]{}, new Object[]{"Type", "Date", "Location", "Status"}));
 
@@ -98,21 +98,21 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
 
         // model.addRow(new Object[]{"Type", "Date", "Location", "Status"});
 
-        String [] header_A = {"Type", "Date", "Location", "Status"};
-        String [][] data_A = {};
+        String [] left_header_A = {"Type", "Date", "Location", "Status"};
+        String [][] left_data_A = {};
 
-        DefaultTableModel model_A = new DefaultTableModel(data_A,header_A);
+        DefaultTableModel left_model_A = new DefaultTableModel(left_data_A,left_header_A);
 
-        JTable table_A = new JTable(model_A);
+        JTable left_table_A = new JTable(left_model_A);
 
-        table_A.setPreferredScrollableViewportSize(new Dimension(450,63));
-        table_A.setFillsViewportHeight(true);
+        left_table_A.setPreferredScrollableViewportSize(new Dimension(450,63));
+        left_table_A.setFillsViewportHeight(true);
 
-        JScrollPane js = new JScrollPane(table_A);
-        js.setVisible(true);
+        JScrollPane left_js_A = new JScrollPane(left_table_A);
+        left_js_A.setVisible(true);
 
         for (Alarme a : this.alarmes_recues){
-            model_A.addRow(new Object[]{a.getType(), a.getDate(), a.getLocation(), a.getStatus()} );
+            left_model_A.addRow(new Object[]{a.getType(), a.getDate(), a.getLocation(), a.getStatus()} );
         }
 
         // Object[][] data = new Object[][] {
@@ -121,24 +121,64 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
         //  {3, "Zorro", 60.0, true },
         // };
         //create table with data
-        gbc_A.gridy = 1;
-        left_panel_A.add(js, gbc_A);
+        left_gbc_A.gridy = 1;
+        left_panel_A.add(left_js_A, left_gbc_A);
 
         this.tri_alarmes(moniteurA);
 
         left_panel_A.setBackground(Color.DARK_GRAY);
         left_title_A.setFont(police);
+
         splitContentG.setLeftComponent(left_panel_A);
 
         JPanel right_panel_A = new JPanel();
-        right_panel_A.setBackground(Color.DARK_GRAY);
 
         JLabel right_title_A = new JLabel("Alarmes traitées (A)");
         right_title_A.setForeground(Color.WHITE);
         right_title_A.setFont(police);
-        right_panel_A.add(right_title_A, BorderLayout.NORTH);
+
+        left_panel_A.setLayout(new GridBagLayout());
+
+        GridBagConstraints right_gbc_A = new GridBagConstraints();
+        right_gbc_A.anchor = GridBagConstraints.NORTH;
+        right_gbc_A.weightx = 0.1;
+        right_gbc_A.weighty = 0.1;
+        right_gbc_A.gridx = 0;
+        right_gbc_A.gridy = 0;
+
+        right_panel_A.add(right_title_A, right_gbc_A);
+
+        String [] right_header_A = {"Type", "Date", "Location", "Status"};
+        String [][] right_data_A = {};
+
+        DefaultTableModel right_model_A = new DefaultTableModel(right_data_A,right_header_A);
+
+        JTable right_table_A = new JTable(right_model_A);
+
+        right_table_A.setPreferredScrollableViewportSize(new Dimension(450,63));
+        right_table_A.setFillsViewportHeight(true);
+
+        JScrollPane right_js_A = new JScrollPane(right_table_A);
+        right_js_A.setVisible(true);
+
+        for (Alarme a : this.alarmes_recues){
+            right_model_A.addRow(new Object[]{a.getType(), a.getDate(), a.getLocation(), a.getStatus()} );
+        }
+
+        // Object[][] data = new Object[][] {
+        //  {1, "John", 40.0, false },
+        //  {2, "Rambo", 70.0, false },
+        //  {3, "Zorro", 60.0, true },
+        // };
+        //create table with data
+        right_gbc_A.gridy = 1;
+        right_panel_A.add(right_js_A, right_gbc_A);
+
+        this.tri_alarmes(moniteurA);
 
         right_panel_A.setBackground(Color.DARK_GRAY);
+        right_title_A.setFont(police);
+
         splitContentG.setRightComponent(right_panel_A);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -185,6 +225,9 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
         table_B.setPreferredScrollableViewportSize(new Dimension(450,63));
         table_B.setFillsViewportHeight(true);
 
+        JScrollPane js_B = new JScrollPane(table_B);
+        js_B.setVisible(true);
+
         for (Alarme a : this.alarmes_recues){
             model_B.addRow(new Object[]{a.getType(), a.getDate(), a.getLocation(), a.getStatus()} );
         }
@@ -196,7 +239,7 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
         // };
         //create table with data
         gbc_B.gridy = 1;
-        left_panel_B.add(js, gbc_B);
+        left_panel_B.add(js_B, gbc_B);
 
         this.tri_alarmes(moniteurB);
 

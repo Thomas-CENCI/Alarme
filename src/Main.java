@@ -20,9 +20,7 @@ public class Main{
 
         frame_accueil.generate_button();
 
-        Statistics stats = new Statistics(moniteurs);
-        
-        Thread.sleep(30000); /** Il faut que toutes les fenêtres soient fermées pour que les stats "fonctionnent" */
-        System.out.println("\nNombre : " + stats.numberOfAlarme() + "\nTypes : " + stats.typesOfAlarme() + "\nDefcon moyen : " + stats.meanDefcon());
+        // Statistics stats = new Statistics(moniteurs);
+        // System.out.println("\nNombre : " + stats.numberOfAlarme() + "\nTypes : " + stats.typesOfAlarme() + "\nDefcon moyen : " + stats.meanDefcon());
     }
 }
