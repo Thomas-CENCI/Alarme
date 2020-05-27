@@ -16,12 +16,12 @@ public class FrameMoniteur extends JFrame {
     private Moniteur moniteurA;
     private Moniteur moniteurB;
 
-    ArrayList<Anomalie> anomalies_recues = new ArrayList<Anomalie>(); /** Il faut trouver un moyen de remplir cette
+    ArrayList<Alarme> alarmes_recues = new ArrayList<Alarme>(); /** Il faut trouver un moyen de remplir cette
                                                                        * liste avec les anomalies générées.
                                                                        * Je pensais mettre un Listener qui permettrait
                                                                        * de mettre à jour la JFrame.. A voir.
                                                                        */
-    ArrayList<Anomalie> anomalies_traitees = new ArrayList<Anomalie>();
+    ArrayList<Alarme> alarmes_traitees = new ArrayList<Alarme>();
 
     public FrameMoniteur(Moniteur moniteurA, Moniteur moniteurB) {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -37,24 +37,22 @@ public class FrameMoniteur extends JFrame {
         FrameMoniteur.this.display_moniteur(FrameMoniteur.this.moniteurA, FrameMoniteur.this.moniteurB);
     }
 
-    public void tri_anomalies(Moniteur moniteur){
+    public void tri_alarmes(Moniteur moniteur){
         for (Alarme alarme : moniteur.getAlarmes()){
-            for (Anomalie anomalie : alarme.getAnomalies()){
-                if (!this.anomalies_recues.contains(anomalie)){
-                    if (anomalie.getStatus() == false){
-                        this.addAnomalie_reçues(anomalie);
-                    }
-                    else{
-                        this.addAnomalie_traitees(anomalie);
-                    }
+            if (!this.alarmes_recues.contains(alarme)){
+                if (alarme.getStatus() == false){
+                    this.addAlarme_recues(alarme);
+                }
+                else{
+                    this.addAlarme_traitees(alarme);
                 }
             }
         }
     }
 
-    public void addAnomalie_reçues(Anomalie anomalie) { anomalies_recues.add(anomalie); }
+    public void addAlarme_recues(Alarme alarme) { alarmes_recues.add(alarme); }
 
-    public void addAnomalie_traitees(Anomalie anomalie) { anomalies_recues.remove(anomalie); anomalies_traitees.add(anomalie); }
+    public void addAlarme_traitees(Alarme alarme) { alarmes_recues.remove(alarme); alarmes_traitees.add(alarme); }
 
 public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
 
@@ -113,7 +111,7 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
         JScrollPane js = new JScrollPane(table_A);
         js.setVisible(true);
 
-        for (Anomalie a : this.anomalies_recues){
+        for (Alarme a : this.alarmes_recues){
             model_A.addRow(new Object[]{a.getType(), a.getDate(), a.getLocation(), a.getStatus()} );
         }
 
@@ -126,9 +124,7 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
         gbc_A.gridy = 1;
         left_panel_A.add(js, gbc_A);
 
-        this.tri_anomalies(moniteurA);
-
-        System.out.println(this.anomalies_recues+" COUCOU");
+        this.tri_alarmes(moniteurA);
 
         left_panel_A.setBackground(Color.DARK_GRAY);
         left_title_A.setFont(police);
@@ -137,7 +133,7 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
         JPanel right_panel_A = new JPanel();
         right_panel_A.setBackground(Color.DARK_GRAY);
 
-        JLabel right_title_A = new JLabel("Anomalies traitées (A)");
+        JLabel right_title_A = new JLabel("Alarmes traitées (A)");
         right_title_A.setForeground(Color.WHITE);
         right_title_A.setFont(police);
         right_panel_A.add(right_title_A, BorderLayout.NORTH);
@@ -156,7 +152,7 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
 
         left_panel_B.setLayout(new GridBagLayout());
 
-        JLabel left_title_B = new JLabel("Anomalies reçues et non traitées (B)");
+        JLabel left_title_B = new JLabel("Alarmes reçues et non traitées (B)");
         left_title_B.setForeground(Color.WHITE);
 
         GridBagConstraints gbc_B = new GridBagConstraints();
@@ -182,7 +178,6 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
         String [] header_B = {"Type", "Date", "Location", "Status"};
         String [][] data_B = {};
 
-
         DefaultTableModel model_B = new DefaultTableModel(data_B,header_B);
 
         JTable table_B = new JTable(model_B);
@@ -190,7 +185,7 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
         table_B.setPreferredScrollableViewportSize(new Dimension(450,63));
         table_B.setFillsViewportHeight(true);
 
-        for (Anomalie a : this.anomalies_recues){
+        for (Alarme a : this.alarmes_recues){
             model_B.addRow(new Object[]{a.getType(), a.getDate(), a.getLocation(), a.getStatus()} );
         }
 
@@ -203,9 +198,7 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
         gbc_B.gridy = 1;
         left_panel_B.add(js, gbc_B);
 
-        this.tri_anomalies(moniteurB);
-
-        System.out.println(this.anomalies_recues+" COUCOU");
+        this.tri_alarmes(moniteurB);
 
         left_panel_B.setBackground(Color.DARK_GRAY);
         left_title_B.setFont(police);
@@ -214,7 +207,7 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
         JPanel right_panel_B = new JPanel();
         right_panel_B.setBackground(Color.DARK_GRAY);
 
-        JLabel right_title_B = new JLabel("Anomalies traitées (B)");
+        JLabel right_title_B = new JLabel("Alarmes traitées (B)");
         right_title_B.setForeground(Color.WHITE);
         right_title_B.setFont(police);
         right_panel_B.add(right_title_B, BorderLayout.NORTH);
@@ -247,7 +240,7 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
                  * Il suffit de supprimer de la liste anomalies_recues et de compléter anomalies_traitees.
                  */
                 int confirm;
-                confirm = confirmation.showConfirmDialog(null, "L'anomalie est-elle traitée ?", "Confirmation de traitement", JOptionPane.YES_NO_OPTION);
+                confirm = confirmation.showConfirmDialog(null, "L'alarme est-elle traitée ?", "Confirmation de traitement", JOptionPane.YES_NO_OPTION);
                 if(confirm == 0){
                     traitee_button.setVisible(false);
                 }
@@ -267,6 +260,8 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
                 traitee_button.setVisible(true);
             }
         });
+
+        System.out.println(this.alarmes_recues+" Alarmes recues frame moniteur");
 
         button_panel.add(detail_button);
         button_panel.add(close_button);

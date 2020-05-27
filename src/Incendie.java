@@ -1,6 +1,11 @@
 import java.util.GregorianCalendar;
 
-public class Incendie extends Anomalie {
+public class Incendie extends Alarme {
+    String type;
+    GregorianCalendar date;
+    String location;
+    int defcon;
+    String detail;
 
     public Incendie(Object source) {
         super(source);
@@ -19,8 +24,12 @@ public class Incendie extends Anomalie {
     public void setDefcon(int defcon){
         this.defcon = defcon;
     }
+
+    public void setDetail(String detail){ this.detail = detail; }
     
-    public GregorianCalendar getDate(){return this.date;}
+    public String getDetail(){ return ""; }
+
+    public GregorianCalendar getDate(){ return this.date; }
 
     public String getType() { return this.type; }
 
@@ -30,7 +39,4 @@ public class Incendie extends Anomalie {
 
     public int getDefcon() { return this.defcon; }
 
-    public int seuil(){
-        return 10;
-    }
 }

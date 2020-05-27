@@ -6,16 +6,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FrameAccueil extends JFrame {
-    private ArrayList anomalies;
+    private ArrayList alarmes;
     private ArrayList moniteurs;
     private FrameMoniteur frame_moniteur;
 
-    public FrameAccueil(ArrayList<HashMap<String, String>> anomalies, ArrayList<Moniteur> moniteurs, FrameMoniteur frame_moniteur) {
+    public FrameAccueil(ArrayList<HashMap<String, String>> alarmes, ArrayList<Moniteur> moniteurs, FrameMoniteur frame_moniteur) {
         this.setSize(350, 75);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
-        this.setTitle("Génération d'anomalie");
-        this.anomalies = anomalies;
+        this.setTitle("Génération d'alarmes");
+        this.alarmes = alarmes;
         this.moniteurs = moniteurs;
         this.frame_moniteur = frame_moniteur;
     }
@@ -24,7 +24,7 @@ public class FrameAccueil extends JFrame {
         JPanel content = new JPanel();
         content.setBackground(Color.DARK_GRAY);
 
-        JButton generer = new JButton("Générer une anomalie");
+        JButton generer = new JButton("Générer une alarme");
         JButton fermer = new JButton("Fermer");
 
         final HashMap<String, String>[] result = new HashMap[]{new HashMap<String, String>()};
@@ -35,8 +35,7 @@ public class FrameAccueil extends JFrame {
                 Frame frame = new Frame(moniteurs, frame_moniteur);
                 result[0] = frame.generate();
                 while (!(result[0].isEmpty())) {
-                    anomalies.add(frame.generate());
-                    System.out.println(anomalies);
+                    alarmes.add(frame.generate());
                 }
             }
         });

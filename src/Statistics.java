@@ -7,33 +7,29 @@ public class Statistics {
         this.moniteurList = moniteurList;
     }
 
-    public int numberOfAnomalie() {
+    public int numberOfAlarme() {
         int nb = 0;
         for (Moniteur moniteur : moniteurList) {
             for (Alarme alarme : moniteur.getAlarmes()) {
-                for(Anomalie anomalie : alarme.getAnomalies()) {
-                    nb++;
-                }
+                nb++;
             }
         }
         return nb;
     }
 
-    public HashMap<String, Integer> typesOfAnomalie() {
+    public HashMap<String, Integer> typesOfAlarme() {
         HashMap<String, Integer> stats = new HashMap<String, Integer>();
         for (Moniteur moniteur : moniteurList) {
             for (Alarme alarme : moniteur.getAlarmes()) {
-                for (Anomalie anomalie : alarme.getAnomalies()) {
-                    if (anomalie.getType().equals("INCENDIE")) {
-                        int inc = stats.getOrDefault("INCENDIE", 0);
-                        stats.put("INCENDIE", inc++);
+                if (alarme.getType().equals("INCENDIE")) {
+                    int inc = stats.getOrDefault("INCENDIE", 0);
+                    stats.put("INCENDIE", inc++);
 
-                        int gaz = stats.getOrDefault("GAZ", 0);
-                        stats.put("INCENDIE", gaz++);
+                    int gaz = stats.getOrDefault("GAZ", 0);
+                    stats.put("INCENDIE", gaz++);
 
-                        int rad = stats.getOrDefault("INCENDIE", 0);
-                        stats.put("INCENDIE", rad++);
-                    }
+                    int rad = stats.getOrDefault("INCENDIE", 0);
+                    stats.put("INCENDIE", rad++);
                 }
             }
         }
@@ -44,10 +40,8 @@ public class Statistics {
         HashMap<Integer, Integer> defcons = new HashMap<Integer, Integer>();
         for (Moniteur moniteur : moniteurList) {
             for (Alarme alarme : moniteur.getAlarmes()) {
-                for (Anomalie anomalie : alarme.getAnomalies()) {
-                    int n = defcons.getOrDefault(anomalie.getDefcon(), 0);
-                    defcons.put(anomalie.getDefcon(), n++);
-                }
+                int n = defcons.getOrDefault(alarme.getDefcon(), 0);
+                defcons.put(alarme.getDefcon(), n++);
             }
         }
         // int keyOfMaxValue = Collections.max(defcons.entrySet(),

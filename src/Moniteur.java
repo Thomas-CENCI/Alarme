@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class Moniteur {
     ArrayList<Alarme> alarmList = new ArrayList<Alarme>();
-    private Anomalie anomalie;
+    private Alarme alarme;
     public String type_moniteur;
 
     public Moniteur(String type){
@@ -14,6 +14,10 @@ public class Moniteur {
         return this.alarmList;
     }
 
+    public void addAlarme(Alarme alarme){
+        this.alarmList.add(alarme);
+    }
+
     public void addAlarmListener(Alarme alarme){
         this.alarmList.add(alarme);
     }
@@ -22,44 +26,29 @@ public class Moniteur {
         this.alarmList.remove(alarme);
     }
 
-    public void generateAnomalie(String location, String type, int defcon) {
-        JOptionPane newAnomalieWarning = new JOptionPane();
+    public void generateAlarme(String location, String type, int defcon, String detail_type) {
+
+        JOptionPane newAlarmeWarning = new JOptionPane();
 
         if (type.toUpperCase().equals("INCENDIE")) {
-            anomalie = new Incendie(this);
-            anomalie.setType("INCENDIE");
-            anomalie.setLocation(location);
-            anomalie.setDefcon(defcon);
-            newAnomalieWarning.showMessageDialog(new JFrame(), "Une nouvelle anomalie a été détectée :\n- Type : " + anomalie.getType() + "\n- Lieu : " + anomalie.location + "\n- Niveau d'importance : " + anomalie.defcon, "Nouvelle anomalie", JOptionPane.WARNING_MESSAGE);
-        }
-        if (type.toUpperCase().equals("RADIATION") && this.type_moniteur.equals("B")) {
-            anomalie = new Radiation(this);
-            anomalie.setType("RADIATION");
-            anomalie.setLocation(location);
-            anomalie.setDefcon(defcon);
-            newAnomalieWarning.showMessageDialog(new JFrame(), "Une nouvelle anomalie a été détectée :\n- Type : " + anomalie.getType() + "\n- Lieu : " + anomalie.location + "\n- Niveau d'importance : " + anomalie.defcon, "Nouvelle anomalie", JOptionPane.WARNING_MESSAGE);
-        }
-        if (type.toUpperCase().equals("GAZ") && this.type_moniteur.equals("A")) {
-            anomalie = new Gaz(this);
-            anomalie.setType("GAZ");
-            anomalie.setLocation(location);
-            anomalie.setDefcon(defcon);
-            newAnomalieWarning.showMessageDialog(new JFrame(), "Une nouvelle anomalie a été détectée :\n- Type : " + anomalie.getType() + "\n- Lieu : " + anomalie.location + "\n- Niveau d'importance : " + anomalie.defcon, "Nouvelle anomalie", JOptionPane.WARNING_MESSAGE);
+            alarme = new Incendie(this);
+            alarme.setType("INCENDIE");
         }
 
-        for (Alarme alarme : alarmList){
-            if (alarme.getType().toUpperCase().equals(type.toUpperCase()) && alarme.getLocation().toUpperCase().equals(location.toUpperCase())){
-                boolean exist = false;
-                for (Anomalie a : alarme.getAnomalies()){
-                    if (a.getDate().equals(anomalie.getDate())){
-                        exist = true;
-                    }
-                }
-                if (!exist){
-                    alarme.addAnomalie(anomalie);
-                    alarme.testSeuil(anomalie.seuil());         
-                }
-            }
+        else if (type.toUpperCase().equals("RADIATION") && this.type_moniteur.equals("B")) {
+            alarme = new Radiation(this);
+            alarme.setType("RADIATION");
         }
+        else if (type.toUpperCase().equals("GAZ") && this.type_moniteur.equals("A")) {
+            alarme = new Gaz(this);
+            alarme.setType("GAZ");
+        }
+
+        alarme.setDetail(detail_type);
+        alarme.setLocation(location);
+        alarme.setDefcon(defcon);
+        newAlarmeWarning.showMessageDialog(new JFrame(), "Une nouvelle alarme a été détectée :" + "\n- Moniteur : " + this.type_moniteur + "\n- Type : " + alarme.getType() + "\n- Lieu : " + alarme.getLocation() + "\n- Niveau d'importance : " + alarme.getDefcon() + "\n- Détail : " + alarme.getDetail(), "Nouvelle alarme", JOptionPane.WARNING_MESSAGE);
+
+        this.addAlarme(alarme);
     }
 }

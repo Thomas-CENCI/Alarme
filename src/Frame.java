@@ -188,14 +188,17 @@ public class Frame extends JFrame {
             public void actionPerformed(ActionEvent event) {
                 if (atLeastOneIsSelected(batButtons) && atLeastOneIsSelected(typeButtons) && atLeastOneIsSelected(nivButtons)) {
                     selectedValues.put("batiment", valueOfSelectedElement(batButtons).toUpperCase());
-                    selectedValues.put("type_anomalie", valueOfSelectedElement(typeButtons).toUpperCase());
+                    selectedValues.put("type_alarme", valueOfSelectedElement(typeButtons).toUpperCase());
                     selectedValues.put("niveau_importance", valueOfSelectedElement(nivButtons).toUpperCase());
                     if (isDetailedType(type_detail)) {
                         selectedValues.put("detail_type", type_detail.getText().toUpperCase());
                     }
+                    else if (selectedValues.get("type_alarme").equals("INCENDIE")){
+                        selectedValues.put("detail_type", "");
+                    }
                     dispose();
                     for (Moniteur moniteur : moniteurs) {
-                        moniteur.generateAnomalie(selectedValues.get("batiment"), selectedValues.get("type_anomalie"), Integer.parseInt(selectedValues.get("niveau_importance")));
+                        moniteur.generateAlarme(selectedValues.get("batiment"), selectedValues.get("type_alarme"), Integer.parseInt(selectedValues.get("niveau_importance")), selectedValues.get("detail_type"));
                     }
                     frame_moniteur.refresh();
                 } else {
@@ -236,7 +239,6 @@ public class Frame extends JFrame {
         button_panel.add(button3, BorderLayout.CENTER);
         button_panel.add(button4, BorderLayout.CENTER);
 
-
         content.setLayout(cardLayout_content);
 
         content.add(batiment_panel, listContent[0]);
@@ -247,12 +249,6 @@ public class Frame extends JFrame {
         this.getContentPane().add(title_panel, BorderLayout.NORTH);
         this.getContentPane().add(content, BorderLayout.CENTER);
         this.setVisible(true);
-
-        for(Moniteur moniteur : moniteurs){
-            for(Alarme alarme : moniteur.getAlarmes()){
-                System.out.println(alarme.getAnomalies());
-            }
-        }
 
         return(selectedValues);
     }

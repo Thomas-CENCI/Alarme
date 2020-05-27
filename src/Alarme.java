@@ -1,36 +1,28 @@
-import javax.swing.*;
-import java.util.*;
+import java.util.EventObject;
+import java.util.GregorianCalendar;
 
-public class Alarme {
-    private ArrayList<Anomalie> anomaliesList = new ArrayList<Anomalie>();
-    private String location;
-    private String type;
+public abstract class Alarme extends EventObject {
+    GregorianCalendar date;
+    String type;
+    String location;
+    int defcon;
+    boolean status = false;
 
-    public Alarme(String type, String location){
-        this.type = type;
-        this.location = location;
+    public Alarme(Object source) {
+        super(source);
     }
 
-    public void addAnomalie(Anomalie anomalie){this.anomaliesList.add(anomalie);}
+    abstract void setType(String type);
+    abstract void setDate(GregorianCalendar date);
+    abstract void setLocation(String location);
+    abstract void setDefcon(int defcon);
+    abstract void setDetail(String detail);
 
-    public void removeAnomalie(Anomalie anomalie){this.anomaliesList.remove(anomalie);}
+    abstract GregorianCalendar getDate();
+    abstract String getType();
+    abstract boolean getStatus();
+    abstract String getLocation();
+    abstract int getDefcon();
+    abstract String getDetail();
 
-    public String getType(){return this.type;}
-
-    public String getLocation(){return this.location;}
-
-    public ArrayList<Anomalie> getAnomalies(){return this.anomaliesList;}
-
-    public void testSeuil(int val){
-        int valmax = 100;
-
-        JOptionPane message = new JOptionPane();
-
-        if (val > valmax){
-            message.showMessageDialog(null, "Une alarme a detecté une anomalie", "Alerte", JOptionPane.WARNING_MESSAGE);
-        }
-        else{
-            message.showMessageDialog(null, "Tudo ben", "Information", JOptionPane.INFORMATION_MESSAGE);
-        }
-    }
 }

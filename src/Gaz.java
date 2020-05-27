@@ -1,7 +1,12 @@
 import java.util.GregorianCalendar;
 
-public class Gaz extends Anomalie {
+public class Gaz extends Alarme {
     String type;
+    GregorianCalendar date;
+    String location;
+    int defcon;
+
+    String detail;
 
     public Gaz(Object source) {
         super(source);
@@ -9,8 +14,8 @@ public class Gaz extends Anomalie {
 
     public void setType(String type) { this.type = type; }
 
-    public void setTypeGaz(String type) {
-        this.type = type;
+    public void setDetail(String detail) {
+        this.detail = detail;
     }
 
     public void setDate(GregorianCalendar date){
@@ -25,6 +30,8 @@ public class Gaz extends Anomalie {
         this.defcon = defcon;
     }
 
+    public String getDetail(){ return this.detail; }
+
     public GregorianCalendar getDate(){return this.date;}
 
     public String getType() { return this.type; }
@@ -34,8 +41,4 @@ public class Gaz extends Anomalie {
     public String getLocation() {return this.location; }
 
     public int getDefcon() { return this.defcon; }
-
-    public int seuil(){
-       return 100;
-    }
 }
