@@ -2,10 +2,11 @@ import java.util.EventObject;
 import java.util.GregorianCalendar;
 
 public abstract class Alarme extends EventObject {
-    GregorianCalendar date;
+    String date;
     String type;
     String location;
     int defcon;
+    String detail;
     boolean status = false;
 
     public Alarme(Object source) {
@@ -13,12 +14,12 @@ public abstract class Alarme extends EventObject {
     }
 
     abstract void setType(String type);
-    abstract void setDate(GregorianCalendar date);
+    abstract void setDate();
     abstract void setLocation(String location);
     abstract void setDefcon(int defcon);
     abstract void setDetail(String detail);
 
-    abstract GregorianCalendar getDate();
+    abstract String getDate();
     abstract String getType();
     abstract boolean getStatus();
     abstract String getLocation();

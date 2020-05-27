@@ -194,7 +194,7 @@ public class Frame extends JFrame {
                         selectedValues.put("detail_type", type_detail.getText().toUpperCase());
                     }
                     else if (selectedValues.get("type_alarme").equals("INCENDIE")){
-                        selectedValues.put("detail_type", "");
+                        selectedValues.put("detail_type", "Pas de détails disponibles");
                     }
                     dispose();
                     for (Moniteur moniteur : moniteurs) {
