@@ -4,6 +4,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.table.*;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+
 
 public class FrameMoniteur extends JFrame {
     private Moniteur moniteurA;
@@ -24,20 +31,14 @@ public class FrameMoniteur extends JFrame {
         this.moniteurB = moniteurB;
     }
 
-    public void tri_anomalies(){
-        for (Alarme alarme : moniteurA.getAlarmes()){
-            for (Anomalie anomalie : alarme.getAnomalies()){
-                if (!this.anomalies_recues.contains(anomalie)){
-                    if (anomalie.getStatus() == false){
-                        this.addAnomalie_reçues(anomalie);
-                    }
-                    else{
-                        this.addAnomalie_traitees(anomalie);
-                    }
-                }
-            }
-        }
-        for (Alarme alarme : moniteurB.getAlarmes()){
+    public void refresh() {
+        //left_panel.removeAll();
+        //right_panel.removeAll();
+        FrameMoniteur.this.display_moniteur(FrameMoniteur.this.moniteurA, FrameMoniteur.this.moniteurB);
+    }
+
+    public void tri_anomalies(Moniteur moniteur){
+        for (Alarme alarme : moniteur.getAlarmes()){
             for (Anomalie anomalie : alarme.getAnomalies()){
                 if (!this.anomalies_recues.contains(anomalie)){
                     if (anomalie.getStatus() == false){
@@ -55,8 +56,7 @@ public class FrameMoniteur extends JFrame {
 
     public void addAnomalie_traitees(Anomalie anomalie) { anomalies_recues.remove(anomalie); anomalies_traitees.add(anomalie); }
 
-
-    public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
+public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
 
         Font police = new Font("Tahoma", Font.BOLD, 18);
 
@@ -118,15 +118,15 @@ public class FrameMoniteur extends JFrame {
         }
 
         // Object[][] data = new Object[][] {
-        // 	{1, "John", 40.0, false },
-        // 	{2, "Rambo", 70.0, false },
-        // 	{3, "Zorro", 60.0, true },
+        //  {1, "John", 40.0, false },
+        //  {2, "Rambo", 70.0, false },
+        //  {3, "Zorro", 60.0, true },
         // };
         //create table with data
         gbc_A.gridy = 1;
         left_panel_A.add(js, gbc_A);
 
-        this.tri_anomalies();
+        this.tri_anomalies(moniteurA);
 
         System.out.println(this.anomalies_recues+" COUCOU");
 
@@ -195,15 +195,15 @@ public class FrameMoniteur extends JFrame {
         }
 
         // Object[][] data = new Object[][] {
-        // 	{1, "John", 40.0, false },
-        // 	{2, "Rambo", 70.0, false },
-        // 	{3, "Zorro", 60.0, true },
+        //  {1, "John", 40.0, false },
+        //  {2, "Rambo", 70.0, false },
+        //  {3, "Zorro", 60.0, true },
         // };
         //create table with data
         gbc_B.gridy = 1;
         left_panel_B.add(js, gbc_B);
 
-        this.tri_anomalies();
+        this.tri_anomalies(moniteurB);
 
         System.out.println(this.anomalies_recues+" COUCOU");
 
@@ -268,20 +268,9 @@ public class FrameMoniteur extends JFrame {
             }
         });
 
-        JButton refresh_button = new JButton("Refresh");
-        refresh_button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                left_panel_A.removeAll();
-                right_panel_A.removeAll();
-                FrameMoniteur.this.display_moniteur(FrameMoniteur.this.moniteurA, FrameMoniteur.this.moniteurB);
-            }
-        });
-
         button_panel.add(detail_button);
         button_panel.add(close_button);
         button_panel.add(traitee_button);
-        button_panel.add(refresh_button);
 
         this.getContentPane().add(content, BorderLayout.CENTER);
         this.getContentPane().add(button_panel, BorderLayout.SOUTH);

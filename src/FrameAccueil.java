@@ -6,18 +6,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FrameAccueil extends JFrame {
-    Frame frame;
-    ArrayList anomalies;
-    ArrayList moniteurs;
+    private ArrayList anomalies;
+    private ArrayList moniteurs;
+    private FrameMoniteur frame_moniteur;
 
-    public FrameAccueil(Frame f, ArrayList<HashMap<String, String>> anomalies, ArrayList<Moniteur> moniteurs) {
+    public FrameAccueil(ArrayList<HashMap<String, String>> anomalies, ArrayList<Moniteur> moniteurs, FrameMoniteur frame_moniteur) {
         this.setSize(350, 75);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setTitle("Génération d'anomalie");
-        this.frame = f;
         this.anomalies = anomalies;
         this.moniteurs = moniteurs;
+        this.frame_moniteur = frame_moniteur;
     }
 
     public void generate_button() {
@@ -32,7 +32,7 @@ public class FrameAccueil extends JFrame {
         generer.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame = new Frame(moniteurs);
+                Frame frame = new Frame(moniteurs, frame_moniteur);
                 result[0] = frame.generate();
                 while (!(result[0].isEmpty())) {
                     anomalies.add(frame.generate());

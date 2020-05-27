@@ -21,11 +21,10 @@ public class Main{
 
         ArrayList<HashMap<String, String>> anomalies = new ArrayList<HashMap<String, String>>();
 
-        Frame frame_generate = new Frame(moniteurs);
-        FrameAccueil frame_accueil = new FrameAccueil(frame_generate, anomalies, moniteurs);
-
         FrameMoniteur frame_moniteur = new FrameMoniteur(mA, mB);
-        frame_moniteur.display_moniteur(mA, mB);
+        FrameAccueil frame_accueil = new FrameAccueil(anomalies, moniteurs, frame_moniteur);
+
+       //frame_moniteur.display_moniteur(mA, mB);
 
         frame_accueil.generate_button();
 

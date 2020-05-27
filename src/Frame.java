@@ -14,13 +14,15 @@ public class Frame extends JFrame {
     String[] listContent = {"Type d'alarme", "Niveau d'importance", "Bâtiment"};
     ArrayList<Moniteur> moniteurs = new ArrayList<Moniteur>();
     int indice = -1;
+    FrameMoniteur frame_moniteur;
 
-    public Frame(ArrayList<Moniteur> moniteurs) {
+    public Frame(ArrayList<Moniteur> moniteurs, FrameMoniteur frame_moniteur) {
         this.setTitle("Alarme");
         this.setSize(600, 350);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.moniteurs = moniteurs;
+        this.frame_moniteur = frame_moniteur;
     }
 
     public HashMap<String, String> generate() {
@@ -195,6 +197,7 @@ public class Frame extends JFrame {
                     for (Moniteur moniteur : moniteurs) {
                         moniteur.generateAnomalie(selectedValues.get("batiment"), selectedValues.get("type_anomalie"), Integer.parseInt(selectedValues.get("niveau_importance")));
                     }
+                    frame_moniteur.refresh();
                 } else {
                     lackOfValues.showMessageDialog(null, "Il manque des éléments dans la séléction des valeurs", "Information", JOptionPane.ERROR_MESSAGE);
                 }
