@@ -55,6 +55,10 @@ public class FrameMoniteur extends JFrame {
     public void addAlarme_traitees(Alarme alarme) { alarmes_recues.remove(alarme); alarmes_traitees.add(alarme); }
 
 public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
+        JPanel right_panel_A = new JPanel();
+        JPanel right_panel_B = new JPanel();
+        JPanel left_panel_A = new JPanel();
+        JPanel left_panel_B = new JPanel();
 
         Font police = new Font("Tahoma", Font.BOLD, 18);
 
@@ -70,7 +74,6 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
         splitContentG.setResizeWeight(0.43);
         content.setLeftComponent(splitContentG);
 
-        JPanel left_panel_A = new JPanel();
         left_panel_A.setBackground(Color.DARK_GRAY);
 
         left_panel_A.setLayout(new GridBagLayout());
@@ -131,13 +134,11 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
 
         splitContentG.setLeftComponent(left_panel_A);
 
-        JPanel right_panel_A = new JPanel();
-
         JLabel right_title_A = new JLabel("Alarmes traitées (A)");
         right_title_A.setForeground(Color.WHITE);
         right_title_A.setFont(police);
 
-        left_panel_A.setLayout(new GridBagLayout());
+        right_panel_A.setLayout(new GridBagLayout());
 
         GridBagConstraints right_gbc_A = new GridBagConstraints();
         right_gbc_A.anchor = GridBagConstraints.NORTH;
@@ -187,7 +188,6 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
         splitContentD.setResizeWeight(0.43);
         content.setRightComponent(splitContentD);
 
-        JPanel left_panel_B = new JPanel();
         left_panel_B.setBackground(Color.DARK_GRAY);
 
         left_panel_B.setLayout(new GridBagLayout());
@@ -247,7 +247,6 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
         left_title_B.setFont(police);
         splitContentD.setLeftComponent(left_panel_B);
 
-        JPanel right_panel_B = new JPanel();
         right_panel_B.setBackground(Color.DARK_GRAY);
 
         JLabel right_title_B = new JLabel("Alarmes traitées (B)");
