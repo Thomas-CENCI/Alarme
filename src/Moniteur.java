@@ -26,6 +26,26 @@ public class Moniteur {
         this.alarmList.remove(alarme);
     }
 
+    public ArrayList<Alarme> getAlarmesRecues(){
+        ArrayList<Alarme> alarmes_recues = new ArrayList<Alarme>();
+        for (Alarme alarme : alarmList){
+            if (alarme.getStatus() == false){
+                alarmes_recues.add(alarme);
+            }
+        }
+        return alarmes_recues;
+    }
+
+    public ArrayList<Alarme> getAlarmesTraitees(){
+        ArrayList<Alarme> alarmes_traitees = new ArrayList<Alarme>();
+        for (Alarme alarme : alarmList){
+            if (alarme.getStatus() == true){
+                alarmes_traitees.add(alarme);
+            }
+        }
+        return alarmes_traitees;
+    }
+
     public void generateAlarme(String location, String type, int defcon, String detail_type) {
 
         JOptionPane newAlarmeWarning = new JOptionPane();
