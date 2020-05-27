@@ -137,7 +137,7 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
         right_title_A.setForeground(Color.WHITE);
         right_title_A.setFont(police);
 
-        left_panel_A.setLayout(new GridBagLayout());
+        right_panel_A.setLayout(new GridBagLayout());
 
         GridBagConstraints right_gbc_A = new GridBagConstraints();
         right_gbc_A.anchor = GridBagConstraints.NORTH;
@@ -248,14 +248,53 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
         splitContentD.setLeftComponent(left_panel_B);
 
         JPanel right_panel_B = new JPanel();
-        right_panel_B.setBackground(Color.DARK_GRAY);
 
         JLabel right_title_B = new JLabel("Alarmes traitées (B)");
         right_title_B.setForeground(Color.WHITE);
         right_title_B.setFont(police);
-        right_panel_B.add(right_title_B, BorderLayout.NORTH);
+
+        right_panel_B.setLayout(new GridBagLayout());
+
+        GridBagConstraints right_gbc_B = new GridBagConstraints();
+        right_gbc_B.anchor = GridBagConstraints.NORTH;
+        right_gbc_B.weightx = 0.1;
+        right_gbc_B.weighty = 0.1;
+        right_gbc_B.gridx = 0;
+        right_gbc_B.gridy = 0;
+
+        right_panel_B.add(right_title_B, right_gbc_B);
+
+        String [] right_header_B = {"Type", "Date", "Location", "Status"};
+        String [][] right_data_B = {};
+
+        DefaultTableModel right_model_B = new DefaultTableModel(right_data_B,right_header_B);
+
+        JTable right_table_B = new JTable(right_model_B);
+
+        right_table_B.setPreferredScrollableViewportSize(new Dimension(450,63));
+        right_table_B.setFillsViewportHeight(true);
+
+        JScrollPane right_js_B = new JScrollPane(right_table_B);
+        right_js_B.setVisible(true);
+
+        for (Alarme a : this.alarmes_recues){
+            right_model_B.addRow(new Object[]{a.getType(), a.getDate(), a.getLocation(), a.getStatus()} );
+        }
+
+        // Object[][] data = new Object[][] {
+        //  {1, "John", 40.0, false },
+        //  {2, "Rambo", 70.0, false },
+        //  {3, "Zorro", 60.0, true },
+        // };
+        //create table with data
+        right_gbc_B.gridy = 1;
+        right_panel_B.add(right_js_B, right_gbc_B);
+
+        this.tri_alarmes(moniteurB);
 
         right_panel_B.setBackground(Color.DARK_GRAY);
+        right_title_B.setFont(police);
+
         splitContentD.setRightComponent(right_panel_B);
 
         JPanel button_panel = new JPanel();
