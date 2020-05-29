@@ -19,8 +19,5 @@ public class Main{
         FrameAccueil frame_accueil = new FrameAccueil(alarmes, moniteurs, frame_moniteur);
 
         frame_accueil.generate_button();
-
-        // Statistics stats = new Statistics(moniteurs);
-        // System.out.println("\nNombre : " + stats.numberOfAlarme() + "\nTypes : " + stats.typesOfAlarme() + "\nDefcon moyen : " + stats.meanDefcon());
     }
 }

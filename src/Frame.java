@@ -202,7 +202,7 @@ public class Frame extends JFrame {
                     manage_alarme.generateAlarme(selectedValues.get("batiment"), selectedValues.get("type_alarme"), Integer.parseInt(selectedValues.get("niveau_importance")), selectedValues.get("detail_type"));
                     frame_moniteur.refresh();
                 } else {
-                    lackOfValues.showMessageDialog(null, "Il manque des éléments dans la séléction des valeurs", "Information", JOptionPane.ERROR_MESSAGE);
+                    lackOfValues.showMessageDialog(null, "Il manque des éléments dans la selection des valeurs", "Information", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
