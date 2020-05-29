@@ -49,9 +49,10 @@ public class Moniteur {
     }
 
     public Alarme getSelectedAlarme(String date, String location, String type, String detail){
-        /*
-        Retourne l'objet Alarme du moniteur correspondant aux critères passés en paramètre,
-        la précision de la date permet d'éviter toute confusion entre différents objets ayant des caractéristiques communes
+        /**
+         * Retourne l'objet Alarme du moniteur correspondant aux critères passés en paramètre,
+         * la précision de la date permet d'éviter toute confusion entre différents objets ayant
+         * des caractéristiques communes
         */
         for (Alarme alarme : this.getAlarmes()){
             if (alarme.getDate() == date && alarme.getLocation() == location && alarme.getType() == type && alarme.getDetail() == detail){

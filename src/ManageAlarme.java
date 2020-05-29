@@ -10,9 +10,9 @@ public class ManageAlarme {
     }
 
     public void generateAlarme(String location, String type, int defcon, String detail_type) {
-    	/*
-    	Génère une alarme en fonction de sa localisation, son type, son degré d'importance et ses détails et l'associe au(x) moniteur(s)
-    	*/
+    	/**
+         * Génère une alarme en fonction de sa localisation, son type, son degré d'importance et ses détails et l'associe au(x) moniteur(s)
+         */
 
         JOptionPane newAlarmeWarning = new JOptionPane();
 
@@ -34,7 +34,7 @@ public class ManageAlarme {
         alarme.setDefcon(defcon);
         alarme.setDate();
 
-        //Pop nouvelle alarme
+        //Pop-up nouvelle alarme
         newAlarmeWarning.showMessageDialog(new JFrame(), "Une nouvelle alarme a été détectée :" + "\n- Date : " + alarme.getDate() + "\n- Type : " + alarme.getType() + "\n- Lieu : " + alarme.getLocation() + "\n- Niveau d'importance : " + alarme.getDefcon() + "\n- Détail : " + alarme.getDetail(), "Nouvelle alarme", JOptionPane.WARNING_MESSAGE);
         
         for (Moniteur moniteur : moniteurs){

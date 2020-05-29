@@ -24,7 +24,7 @@ public class FrameMoniteur extends JFrame {
 
     public void refresh() {
         FrameMoniteur.this.getContentPane().removeAll();//Supprime l'ensemble des éléments du panel
-        FrameMoniteur.this.repaint();//Met à jour la fenêtre
+        FrameMoniteur.this.repaint();//Met à jour les elements de la fenetre
 
         FrameMoniteur.this.display_moniteur(FrameMoniteur.this.moniteurA, FrameMoniteur.this.moniteurB);//Recrée les différents éléments
     }
@@ -38,7 +38,8 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
         JOptionPane detail = new JOptionPane();
         JOptionPane confirmation = new JOptionPane();
 
-        JSplitPane content = new JSplitPane(JSplitPane.VERTICAL_SPLIT){//Empêche le redimensionnement des panels
+        JSplitPane content = new JSplitPane(JSplitPane.VERTICAL_SPLIT){
+            //Empêche le redimensionnement des panels
             private final int location = 400;
             {
                 setDividerLocation( location );
@@ -143,7 +144,6 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
                             //Traitement d'une alarme
                             selected_alarme.setStatus(true);//Alarme traitée
                             FrameMoniteur.this.refresh();//Mise à jour des tableaux
-                            frame_detail.setVisible(false);
                             frame_detail.dispose();
                         }
                     });
@@ -212,8 +212,8 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        //Empêche le redimensionnement des panels
         JSplitPane splitContentD = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT){
+            //Empêche le redimensionnement des panels
             private final int location = 775;
             {
                 setDividerLocation( location );
@@ -298,7 +298,6 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
                         public void actionPerformed(ActionEvent e) {
                             selected_alarme.setStatus(true);
                             FrameMoniteur.this.refresh();
-                            frame_detail.setVisible(false);
                             frame_detail.dispose();
                         }
                     });
