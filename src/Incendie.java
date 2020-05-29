@@ -10,7 +10,7 @@ public class Incendie extends Alarme {
     public void setType(String type) { this.type = type; }
 
     public void setDate(){
-        SimpleDateFormat formattedDate = new SimpleDateFormat("dd-MMM-yyyy hh-mm-ss");
+        SimpleDateFormat formattedDate = new SimpleDateFormat("hh:mm:ss dd-MMM-yyyy");
         GregorianCalendar gregorianCalendarDate = new GregorianCalendar();
         this.date = formattedDate.format(gregorianCalendarDate.getTime());
     }

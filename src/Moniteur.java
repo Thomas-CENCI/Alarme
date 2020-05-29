@@ -22,10 +22,6 @@ public class Moniteur {
         this.alarmList.add(alarme);
     }
 
-    public void addAlarmListener(Alarme alarme){
-        this.alarmList.add(alarme);
-    }
-
     public void removeAlarmListener(Alarme alarme){
         this.alarmList.remove(alarme);
     }
@@ -59,5 +55,4 @@ public class Moniteur {
         }
         return null;
     }
-
 }
