@@ -10,8 +10,6 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-
-
 public class FrameMoniteur extends JFrame {
     private Moniteur moniteurA;
     private Moniteur moniteurB;
@@ -79,13 +77,18 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
         left_title_A.setForeground(Color.WHITE);
         left_panel_A.add(left_title_A, left_gbc_A);
 
-
-
         String [] left_header_A = {"Date", "Localisation", "Type", "Détail"};
         String [][] left_data_A = {};
 
         DefaultTableModel left_model_A = new DefaultTableModel(left_data_A,left_header_A);
         JTable left_table_A = new JTable(left_model_A);
+
+        left_table_A.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+            public void valueChanged(ListSelectionEvent event) {
+                System.out.println(left_table_A.getValueAt(left_table_A.getSelectedRow(), 0).toString());
+            }
+        });
+
         left_table_A.setPreferredScrollableViewportSize(new Dimension(450,63));
         left_table_A.setFillsViewportHeight(true);
 
@@ -100,8 +103,6 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
         left_panel_A.add(left_js_A, left_gbc_A);
 
         splitContentG.setLeftComponent(left_panel_A);
-
-
 
         //*********RIGHT TOP PANEL**********
         right_panel_A.setBackground(Color.DARK_GRAY);
@@ -169,6 +170,16 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
 
         DefaultTableModel left_model_B = new DefaultTableModel(left_data_B,left_header_B);
         JTable left_table_B = new JTable(left_model_B);
+
+        left_panel_B.add(left_title_B, left_gbc_B);
+
+        left_table_B.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+            public void valueChanged(ListSelectionEvent event) {
+                System.out.println(left_table_B.getValueAt(left_table_B.getSelectedRow(), 1).toString());
+                System.out.println("OK");
+            }
+        });
+
         left_table_B.setPreferredScrollableViewportSize(new Dimension(450,63));
         left_table_B.setFillsViewportHeight(true);
 
