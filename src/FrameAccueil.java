@@ -32,6 +32,9 @@ public class FrameAccueil extends JFrame {
         generer.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                /**
+                 * Genere la fenetre dans laquelle l'utilisateur renseigne les information sur l'alarme a creer
+                 */
                 Frame frame = new Frame(moniteurs, frame_moniteur);
                 result[0] = frame.generate();
                 while (!(result[0].isEmpty())) {
@@ -43,6 +46,7 @@ public class FrameAccueil extends JFrame {
         fermer.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // Ferme la fenetre
                 dispose();
             }
         });

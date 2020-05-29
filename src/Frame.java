@@ -7,11 +7,16 @@ import javax.swing.*;
 
 public class Frame extends JFrame {
 
+    // Les CardLayout permettent la pagination des frames
     CardLayout cardLayout_content = new CardLayout();
     CardLayout cardLayout_detail = new CardLayout();
+
     JPanel content = new JPanel();
     JLabel label = new JLabel("Bâtiment");
+
+    // Liste des differents onglets de la frame content
     String[] listContent = {"Type d'alarme", "Niveau d'importance", "Bâtiment"};
+
     ArrayList<Moniteur> moniteurs = new ArrayList<Moniteur>();
     int indice = -1;
     FrameMoniteur frame_moniteur;
@@ -28,6 +33,11 @@ public class Frame extends JFrame {
     }
 
     public HashMap<String, String> generate() {
+        /**
+         * Cette fonction est responsable de l'affichage de la fenetre permettant de renseigner les informations
+         * necessaire a la creation d'alarme et de ladite creation.
+         */
+
         JPanel title_panel = new JPanel();
         title_panel.setBackground(Color.ORANGE);
 
@@ -84,17 +94,22 @@ public class Frame extends JFrame {
 
         ArrayList<AbstractButton> batButtons = Collections.list(group_batiment.getElements());
 
+        // Les BorderLayout permettent le positionnement des panels
         batiment_panel.add(bat1, BorderLayout.CENTER);
         batiment_panel.add(bat2, BorderLayout.CENTER);
         batiment_panel.add(bat3, BorderLayout.CENTER);
         batiment_panel.add(bat4, BorderLayout.CENTER);
 
+        // Champs permettant de renseigner le type de gaz émis
         JTextField type_detail = new JTextField("Type de gaz émis");
         type_detail.addFocusListener(new FocusListener() {
+
+            // Permet de detecter si l'element est selectionne par l'utilisateur
             public void focusGained(FocusEvent e) {
                 type_detail.setText("");
             }
 
+            // Permet de savoir si l'utilsateur a quitter l'edition de ce champs
             public void focusLost(FocusEvent e) {
             }
         });
@@ -167,11 +182,14 @@ public class Frame extends JFrame {
         label.setFont(police);
         label.setForeground(Color.DARK_GRAY);
 
+        // Le bouton suivant permet de circuler parmis les différents onglets
         JButton button = new JButton("Suivant");
         JOptionPane lackOfDetail = new JOptionPane();
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // Le test qui suit permet de s'assurer que l'utilisateur n'oublie pas de renseigner le type de gaz
+                // emis ou le niveau de radiation avant de poursuivre
                 if (((indice + 1) % 3 == 1) && atLeastOneIsSelected(typeButtons) && !(valueOfSelectedElement(typeButtons).equals("Incendie")) && !(isDetailedType(type_detail))) {
                     lackOfDetail.showMessageDialog(null, "Merci de renseigner les détails à propos du type d'anomalie", "Attention", JOptionPane.WARNING_MESSAGE);
                 } else {
@@ -183,11 +201,14 @@ public class Frame extends JFrame {
             }
         });
 
+        // Le bouton valider permet de retenir les options choisies par l'utilisateur et de generer
+        // l'alarme correspondante
         JButton button2 = new JButton("Valider");
         JOptionPane lackOfValues = new JOptionPane();
         HashMap<String, String> selectedValues = new HashMap<String, String>();
         button2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent event) {
+                // Le test qui suit permet de verifier si l'ensemble des informations a ete renseigne par l'utilisateur
                 if (atLeastOneIsSelected(batButtons) && atLeastOneIsSelected(typeButtons) && atLeastOneIsSelected(nivButtons)) {
                     selectedValues.put("batiment", valueOfSelectedElement(batButtons).toUpperCase());
                     selectedValues.put("type_alarme", valueOfSelectedElement(typeButtons).toUpperCase());
@@ -198,34 +219,42 @@ public class Frame extends JFrame {
                     else if (selectedValues.get("type_alarme").equals("INCENDIE")){
                         selectedValues.put("detail_type", "Pas de détails disponibles");
                     }
+                    // Ferme la fenetre
                     dispose();
+                    // Genere l'alarme en fonction des valeurs renseignees
                     manage_alarme.generateAlarme(selectedValues.get("batiment"), selectedValues.get("type_alarme"), Integer.parseInt(selectedValues.get("niveau_importance")), selectedValues.get("detail_type"));
+                    // Met a jour l'interface
                     frame_moniteur.refresh();
-                } else {
+                }
+                // Previens l'utilisateur du manque d'information
+                else {
                     lackOfValues.showMessageDialog(null, "Il manque des éléments dans la selection des valeurs", "Information", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
 
+        // Le bouton detail affiche des information en fonction de la page courante
         JButton button3 = new JButton("Détails");
         JOptionPane det = new JOptionPane();
         button3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // Page batiment
                 if ((indice + 1) % 3 == 0) {
                     det.showMessageDialog(null, "Merci de choisir un bâtiment", "Information", JOptionPane.INFORMATION_MESSAGE);
                 }
-
+                // Page type d'alarme
                 if ((indice + 1) % 3 == 1) {
                     det.showMessageDialog(null, "Merci de choisir le type d'alarme parmi les suivants :\n- Incendie\n- Gaz(Hydrogène, Hélium, CO2)\n- Radiation(1 -> 100)", "Information", JOptionPane.INFORMATION_MESSAGE);
                 }
-
+                // Page niveau d'importance
                 if ((indice + 1) % 3 == 2) {
                     det.showMessageDialog(null, "Merci de renseigner le niveau d'importance (de 1 à 3)", "Information", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         });
 
+        // Le bouton fermer ferme la fenetre
         JButton button4 = new JButton("Fermer");
         button4.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -233,6 +262,7 @@ public class Frame extends JFrame {
             }
         });
 
+        // Ajout des composants dans leur panel respectif
         title_panel.add(label, BorderLayout.NORTH);
         button_panel.add(button, BorderLayout.CENTER);
         button_panel.add(button2, BorderLayout.CENTER);
@@ -241,10 +271,12 @@ public class Frame extends JFrame {
 
         content.setLayout(cardLayout_content);
 
+        // Ajout des panels dans leur onglet respectif
         content.add(batiment_panel, listContent[0]);
         content.add(main_type_panel, listContent[1]);
         content.add(niv_panel, listContent[2]);
 
+        // Ajout des panels dans la frame
         this.getContentPane().add(button_panel, BorderLayout.SOUTH);
         this.getContentPane().add(title_panel, BorderLayout.NORTH);
         this.getContentPane().add(content, BorderLayout.CENTER);
@@ -254,6 +286,9 @@ public class Frame extends JFrame {
     }
 
     private boolean atLeastOneIsSelected(ArrayList<AbstractButton> buttonList){
+        /**
+         * Cette fonction vérifie si au moins l'un des boutons est selectionne
+         */
         for(AbstractButton button : buttonList) {
             if (button.isSelected()){
                 return true;
@@ -263,6 +298,9 @@ public class Frame extends JFrame {
     }
 
     private String valueOfSelectedElement(ArrayList<AbstractButton> buttonList){
+        /**
+         * Cette fonction permet d'accerder a la valeur du bouton selectionne
+         */
         for(AbstractButton button : buttonList) {
             if (button.isSelected()){
                 return button.getText();
@@ -272,6 +310,9 @@ public class Frame extends JFrame {
     }
 
     private boolean isDetailedType(JTextField textField){
+        /**
+         * Verifie si le type d'alarme requiert une precision
+         */
         if(textField.getText().equals("") || textField.getText().equals("Type de gaz émis") || textField.getText().equals("Niveau de radiation (1 - 100)")){
             return false;
         }
