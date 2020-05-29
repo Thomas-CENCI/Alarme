@@ -10,6 +10,9 @@ public class ManageAlarme {
     }
 
     public void generateAlarme(String location, String type, int defcon, String detail_type) {
+    	/*
+    	Génère une alarme en fonction de sa localisation, son type, son degré d'importance et ses détails
+    	*/
 
         JOptionPane newAlarmeWarning = new JOptionPane();
 
