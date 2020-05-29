@@ -25,6 +25,7 @@ public class FrameMoniteur extends JFrame {
     public void refresh() {
         FrameMoniteur.this.getContentPane().removeAll();
         FrameMoniteur.this.repaint();
+
         FrameMoniteur.this.display_moniteur(FrameMoniteur.this.moniteurA, FrameMoniteur.this.moniteurB);
     }
 
@@ -37,10 +38,36 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
         JOptionPane detail = new JOptionPane();
         JOptionPane confirmation = new JOptionPane();
 
-        JSplitPane content = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+        JSplitPane content = new JSplitPane(JSplitPane.VERTICAL_SPLIT){
+            private final int location = 400;
+            {
+                setDividerLocation( location );
+            }
+            @Override
+            public int getDividerLocation() {
+                return location ;
+            }
+            @Override
+            public int getLastDividerLocation() {
+                return location ;
+            }
+        };
         content.setResizeWeight(0.5);
 
-        JSplitPane splitContentG = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+        JSplitPane splitContentG = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT){
+            private final int location = 775;
+            {
+                setDividerLocation( location );
+            }
+            @Override
+            public int getDividerLocation() {
+                return location ;
+            }
+            @Override
+            public int getLastDividerLocation() {
+                return location ;
+            }
+        };
         splitContentG.setResizeWeight(0.43);
         content.setLeftComponent(splitContentG);
 
@@ -136,7 +163,20 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        JSplitPane splitContentD = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+        JSplitPane splitContentD = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT){
+            private final int location = 775;
+            {
+                setDividerLocation( location );
+            }
+            @Override
+            public int getDividerLocation() {
+                return location ;
+            }
+            @Override
+            public int getLastDividerLocation() {
+                return location ;
+            }
+        };
         splitContentD.setResizeWeight(0.43);
         content.setRightComponent(splitContentD);
 
@@ -168,9 +208,13 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
         left_panel_B.add(left_title_B, left_gbc_B);
 
         left_table_B.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+            @Override
             public void valueChanged(ListSelectionEvent event) {
-                System.out.println(left_table_B.getValueAt(left_table_B.getSelectedRow(), 1).toString());
-                System.out.println("OK");
+                JOptionPane newAlarmeWarning = new JOptionPane();
+                String test = left_table_A.getValueAt(left_table_A.getSelectedRow(), 0).toString();
+                newAlarmeWarning.showMessageDialog(new JFrame(), test, "Détail alarme", JOptionPane.INFORMATION_MESSAGE);
+
+                System.out.println(left_table_A.getValueAt(left_table_A.getSelectedRow(), 0).toString());
             }
         });
 
