@@ -19,6 +19,9 @@ public class FrameMoniteur extends JFrame {
     JPanel right_panel_B = new JPanel();
     JPanel button_panel = new JPanel();
 
+    DefaultTableModel left_model_A = new DefaultTableModel(left_data_A,left_header_A);
+    JTable left_table_A = new JTable(left_model_A);
+
     public FrameMoniteur(Moniteur moniteurA, Moniteur moniteurB) {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setLocationRelativeTo(null);
@@ -33,6 +36,12 @@ public class FrameMoniteur extends JFrame {
         left_panel_B.removeAll();
         right_panel_B.removeAll();
         button_panel.removeAll();
+
+        String [] header = {"Date", "Localisation", "Type", "Détail"};
+        String [][] data = {};
+
+        DefaultTableModel left_model_A = new DefaultTableModel(header, data);
+        JTable left_table_A = new JTable(left_model_A);
 
         left_panel_A = new JPanel();
         right_panel_A = new JPanel();
@@ -84,7 +93,12 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
         JTable left_table_A = new JTable(left_model_A);
 
         left_table_A.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+            @Override
             public void valueChanged(ListSelectionEvent event) {
+                JOptionPane newAlarmeWarning = new JOptionPane();
+                String test = left_table_A.getValueAt(left_table_A.getSelectedRow(), 0).toString();
+                newAlarmeWarning.showMessageDialog(new JFrame(), test, "Détail alarme", JOptionPane.INFORMATION_MESSAGE);
+
                 System.out.println(left_table_A.getValueAt(left_table_A.getSelectedRow(), 0).toString());
             }
         });
