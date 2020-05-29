@@ -13,14 +13,6 @@ import java.awt.event.MouseEvent;
 public class FrameMoniteur extends JFrame {
     private Moniteur moniteurA;
     private Moniteur moniteurB;
-    JPanel left_panel_A = new JPanel();
-    JPanel right_panel_A = new JPanel();
-    JPanel left_panel_B = new JPanel();
-    JPanel right_panel_B = new JPanel();
-    JPanel button_panel = new JPanel();
-
-    DefaultTableModel left_model_A = new DefaultTableModel(left_data_A,left_header_A);
-    JTable left_table_A = new JTable(left_model_A);
 
     public FrameMoniteur(Moniteur moniteurA, Moniteur moniteurB) {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -31,27 +23,10 @@ public class FrameMoniteur extends JFrame {
     }
 
     public void refresh() {
-        left_panel_A.removeAll();
-        right_panel_A.removeAll();
-        left_panel_B.removeAll();
-        right_panel_B.removeAll();
-        button_panel.removeAll();
-
-        String [] header = {"Date", "Localisation", "Type", "Détail"};
-        String [][] data = {};
-
-        DefaultTableModel left_model_A = new DefaultTableModel(header, data);
-        JTable left_table_A = new JTable(left_model_A);
-
-        left_panel_A = new JPanel();
-        right_panel_A = new JPanel();
-        left_panel_B = new JPanel();
-        right_panel_B = new JPanel();
-        button_panel = new JPanel();
-
+        FrameMoniteur.this.getContentPane().removeAll();
+        FrameMoniteur.this.repaint();
         FrameMoniteur.this.display_moniteur(FrameMoniteur.this.moniteurA, FrameMoniteur.this.moniteurB);
     }
-
 
 public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
 
@@ -69,6 +44,11 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
         splitContentG.setResizeWeight(0.43);
         content.setLeftComponent(splitContentG);
 
+        JPanel left_panel_A = new JPanel();
+        JPanel right_panel_A = new JPanel();
+        JPanel left_panel_B = new JPanel();
+        JPanel right_panel_B = new JPanel();
+        JPanel button_panel = new JPanel();
 
         ////*******LEFT TOP PANEL********
         left_panel_A.setBackground(Color.DARK_GRAY);
