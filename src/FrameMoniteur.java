@@ -102,11 +102,52 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
         left_table_A.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
             @Override
             public void valueChanged(ListSelectionEvent event) {
-                JOptionPane newAlarmeWarning = new JOptionPane();
-                String test = left_table_A.getValueAt(left_table_A.getSelectedRow(), 0).toString();
-                newAlarmeWarning.showMessageDialog(new JFrame(), test, "Détail alarme", JOptionPane.INFORMATION_MESSAGE);
+                JFrame frame_detail = new JFrame();
 
-                System.out.println(left_table_A.getValueAt(left_table_A.getSelectedRow(), 0).toString());
+                frame_detail.setSize(500, 200);
+                frame_detail.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame_detail.setLocationRelativeTo(null);
+                frame_detail.setTitle("Détail alarme");
+                frame_detail.setLayout(new BorderLayout());
+
+                String detail_date = left_table_A.getValueAt(left_table_A.getSelectedRow(), 0).toString();
+                String detail_location = left_table_A.getValueAt(left_table_A.getSelectedRow(), 1).toString();
+                String detail_type = left_table_A.getValueAt(left_table_A.getSelectedRow(), 2).toString();
+                String detail_detail = left_table_A.getValueAt(left_table_A.getSelectedRow(), 3).toString();
+
+                Alarme selected_alarme = moniteurA.getSelectedAlarme(detail_date, detail_location, detail_type, detail_detail);
+
+                JPanel detail_panel = new JPanel();
+                detail_panel.setBackground(Color.DARK_GRAY);
+
+                String html_label = "<html> <br>Date : " + selected_alarme.getDate() + "<br>Type : " + selected_alarme.getType() + "<br>Lieu : " + selected_alarme.getLocation() + "<br>Niveau d'importance : " + selected_alarme.getDefcon() + "<br>Détail : " + selected_alarme.getDetail();
+                JLabel detail_label = new JLabel(html_label);
+                detail_label.setFont(police);
+                detail_label.setForeground(Color.WHITE);
+
+                detail_panel.add(detail_label);
+
+                JPanel panel_detail_button = new JPanel();
+                panel_detail_button.setBackground(Color.DARK_GRAY);
+                JButton traiter_button = new JButton("Traiter");
+                traiter_button.setSize(20, 10);
+
+                traiter_button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        selected_alarme.setStatus(true);
+                        FrameMoniteur.this.refresh();
+                        frame_detail.setVisible(false);
+                        frame_detail.dispose();
+                    }
+                });
+
+                panel_detail_button.add(traiter_button);
+
+                frame_detail.getContentPane().add(detail_panel, BorderLayout.NORTH);
+                frame_detail.getContentPane().add(panel_detail_button, BorderLayout.CENTER);
+                frame_detail.setVisible(true);
+                frame_detail.toFront();
             }
         });
 
@@ -210,11 +251,52 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
         left_table_B.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
             @Override
             public void valueChanged(ListSelectionEvent event) {
-                JOptionPane newAlarmeWarning = new JOptionPane();
-                String test = left_table_A.getValueAt(left_table_A.getSelectedRow(), 0).toString();
-                newAlarmeWarning.showMessageDialog(new JFrame(), test, "Détail alarme", JOptionPane.INFORMATION_MESSAGE);
+                JFrame frame_detail = new JFrame();
 
-                System.out.println(left_table_A.getValueAt(left_table_A.getSelectedRow(), 0).toString());
+                frame_detail.setSize(500, 200);
+                frame_detail.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame_detail.setLocationRelativeTo(null);
+                frame_detail.setTitle("Détail alarme");
+                frame_detail.setLayout(new BorderLayout());
+
+                String detail_date = left_table_B.getValueAt(left_table_B.getSelectedRow(), 0).toString();
+                String detail_location = left_table_B.getValueAt(left_table_B.getSelectedRow(), 1).toString();
+                String detail_type = left_table_B.getValueAt(left_table_B.getSelectedRow(), 2).toString();
+                String detail_detail = left_table_B.getValueAt(left_table_B.getSelectedRow(), 3).toString();
+
+                Alarme selected_alarme = moniteurB.getSelectedAlarme(detail_date, detail_location, detail_type, detail_detail);
+
+                JPanel detail_panel = new JPanel();
+                detail_panel.setBackground(Color.DARK_GRAY);
+
+                String html_label = "<html> <br>Date : " + selected_alarme.getDate() + "<br>Type : " + selected_alarme.getType() + "<br>Lieu : " + selected_alarme.getLocation() + "<br>Niveau d'importance : " + selected_alarme.getDefcon() + "<br>Détail : " + selected_alarme.getDetail();
+                JLabel detail_label = new JLabel(html_label);
+                detail_label.setFont(police);
+                detail_label.setForeground(Color.WHITE);
+
+                detail_panel.add(detail_label);
+
+                JPanel panel_detail_button = new JPanel();
+                panel_detail_button.setBackground(Color.DARK_GRAY);
+                JButton traiter_button = new JButton("Traiter");
+                traiter_button.setSize(20, 10);
+
+                traiter_button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        selected_alarme.setStatus(true);
+                        FrameMoniteur.this.refresh();
+                        frame_detail.setVisible(false);
+                        frame_detail.dispose();
+                    }
+                });
+
+                panel_detail_button.add(traiter_button);
+
+                frame_detail.getContentPane().add(detail_panel, BorderLayout.NORTH);
+                frame_detail.getContentPane().add(panel_detail_button, BorderLayout.CENTER);
+                frame_detail.setVisible(true);
+                frame_detail.toFront();
             }
         });
 

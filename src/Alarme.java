@@ -18,6 +18,7 @@ public abstract class Alarme extends EventObject {
     abstract void setLocation(String location);
     abstract void setDefcon(int defcon);
     abstract void setDetail(String detail);
+    abstract void setStatus(Boolean status);
 
     abstract String getDate();
     abstract String getType();

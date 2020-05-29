@@ -20,6 +20,7 @@ public class Radiation extends Alarme {
 
     public void setDefcon(int defcon){ this.defcon = defcon;}
 
+    public void setStatus(Boolean status) {this.status = status; }
 
 
     public String getDetail(){ return this.detail; }

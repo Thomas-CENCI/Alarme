@@ -15,6 +15,7 @@ public class Frame extends JFrame {
     ArrayList<Moniteur> moniteurs = new ArrayList<Moniteur>();
     int indice = -1;
     FrameMoniteur frame_moniteur;
+    ManageAlarme manage_alarme;
 
     public Frame(ArrayList<Moniteur> moniteurs, FrameMoniteur frame_moniteur) {
         this.setTitle("Alarme");
@@ -23,6 +24,7 @@ public class Frame extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.moniteurs = moniteurs;
         this.frame_moniteur = frame_moniteur;
+        this.manage_alarme = new ManageAlarme(moniteurs);
     }
 
     public HashMap<String, String> generate() {
@@ -197,9 +199,7 @@ public class Frame extends JFrame {
                         selectedValues.put("detail_type", "Pas de détails disponibles");
                     }
                     dispose();
-                    for (Moniteur moniteur : moniteurs) {
-                        moniteur.generateAlarme(selectedValues.get("batiment"), selectedValues.get("type_alarme"), Integer.parseInt(selectedValues.get("niveau_importance")), selectedValues.get("detail_type"));
-                    }
+                    manage_alarme.generateAlarme(selectedValues.get("batiment"), selectedValues.get("type_alarme"), Integer.parseInt(selectedValues.get("niveau_importance")), selectedValues.get("detail_type"));
                     frame_moniteur.refresh();
                 } else {
                     lackOfValues.showMessageDialog(null, "Il manque des éléments dans la séléction des valeurs", "Information", JOptionPane.ERROR_MESSAGE);

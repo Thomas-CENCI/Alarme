@@ -21,6 +21,8 @@ public class Incendie extends Alarme {
 
     public void setDetail(String detail) { this.detail = detail; }
 
+    public void setStatus(Boolean status) {this.status = status; }
+
 
     
     public String getDetail(){ return this.detail; }
