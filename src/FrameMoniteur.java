@@ -23,10 +23,10 @@ public class FrameMoniteur extends JFrame {
     }
 
     public void refresh() {
-        FrameMoniteur.this.getContentPane().removeAll();
-        FrameMoniteur.this.repaint();
+        FrameMoniteur.this.getContentPane().removeAll();//Supprime l'ensemble des éléments du panel
+        FrameMoniteur.this.repaint();//Met à jour la fenêtre
 
-        FrameMoniteur.this.display_moniteur(FrameMoniteur.this.moniteurA, FrameMoniteur.this.moniteurB);
+        FrameMoniteur.this.display_moniteur(FrameMoniteur.this.moniteurA, FrameMoniteur.this.moniteurB);//Recrée les différents éléments
     }
 
 public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
@@ -38,7 +38,7 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
         JOptionPane detail = new JOptionPane();
         JOptionPane confirmation = new JOptionPane();
 
-        JSplitPane content = new JSplitPane(JSplitPane.VERTICAL_SPLIT){
+        JSplitPane content = new JSplitPane(JSplitPane.VERTICAL_SPLIT){//Empêche le redimensionnement des panels
             private final int location = 400;
             {
                 setDividerLocation( location );
@@ -77,7 +77,7 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
         JPanel right_panel_B = new JPanel();
         JPanel button_panel = new JPanel();
 
-        ////*******LEFT TOP PANEL********
+        ////*******LEFT TOP PANEL Alarmes non traitées moniteur A********
         left_panel_A.setBackground(Color.DARK_GRAY);
         left_panel_A.setLayout(new GridBagLayout());
 
@@ -93,17 +93,17 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
         left_title_A.setForeground(Color.WHITE);
         left_panel_A.add(left_title_A, left_gbc_A);
 
-        String [] left_header_A = {"Date", "Localisation", "Type", "Détail"};
-        String [][] left_data_A = {};
+        String [] left_header_A = {"Date", "Localisation", "Type", "Détail"};//Header du tableau
+        String [][] left_data_A = {};//Données du tableau
 
-        DefaultTableModel left_model_A = new DefaultTableModel(left_data_A,left_header_A);
+        DefaultTableModel left_model_A = new DefaultTableModel(left_data_A,left_header_A);//Création du modèle de données du tableau
         JTable left_table_A = new JTable(left_model_A);
 
         left_table_A.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
             @Override
             public void valueChanged(ListSelectionEvent event) {
-
-                if(!event.getValueIsAdjusting()) {
+                // Fenêtre des détails d'une alarme avec bouton de traitement
+                if(!event.getValueIsAdjusting()) {//Permet de n'afficher qu'une fenêtre au lieu de 2 (clic, relâchement du clic -> 2 appels)
                     JFrame frame_detail = new JFrame();
 
                     frame_detail.setSize(500, 250);
@@ -112,17 +112,20 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
                     frame_detail.setTitle("Détail alarme");
                     frame_detail.setLayout(new BorderLayout());
 
+                    //Récupération des différents éléments de la ligne sélectionnée
                     String detail_date = left_table_A.getValueAt(left_table_A.getSelectedRow(), 0).toString();
                     String detail_location = left_table_A.getValueAt(left_table_A.getSelectedRow(), 1).toString();
                     String detail_type = left_table_A.getValueAt(left_table_A.getSelectedRow(), 2).toString();
                     String detail_detail = left_table_A.getValueAt(left_table_A.getSelectedRow(), 3).toString();
 
+                    //Récupération de l'objet Alarme associé aux éléments de la ligne sélectionnée
                     Alarme selected_alarme = moniteurA.getSelectedAlarme(detail_date, detail_location, detail_type, detail_detail);
 
                     JPanel detail_panel = new JPanel();
                     detail_panel.setBackground(Color.DARK_GRAY);
 
-                    String html_label = "<html> <br>Date : " + selected_alarme.getDate() + "<br>Type : " + selected_alarme.getType() + "<br>Lieu : " + selected_alarme.getLocation() + "<br>Niveau d'importance : " + selected_alarme.getDefcon() + "<br>Détail : " + selected_alarme.getDetail();
+                    //Génération du panel contenant les détails de l'alarme 
+                    String html_label = "<html> <br>Date : " + selected_alarme.getDate() + "<br>Type : " + selected_alarme.getType() + "<br>Lieu : " + selected_alarme.getLocation() + "<br>Niveau d'importance : " + selected_alarme.getDefcon() + "<br>Détail : " + selected_alarme.getDetail()+ "</html>";
                     JLabel detail_label = new JLabel(html_label);
                     detail_label.setFont(police);
                     detail_label.setForeground(Color.WHITE);
@@ -137,8 +140,9 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
                     traiter_button.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            selected_alarme.setStatus(true);
-                            FrameMoniteur.this.refresh();
+                            //Traitement d'une alarme
+                            selected_alarme.setStatus(true);//Alarme traitée
+                            FrameMoniteur.this.refresh();//Mise à jour des tableaux
                             frame_detail.setVisible(false);
                             frame_detail.dispose();
                         }
@@ -161,6 +165,7 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
         left_js_A.setVisible(true);
 
         for (Alarme alarme : moniteurA.getAlarmesRecues()){
+            //Pour chaque alarme reçue et non traitée, une ligne est ajoutée
             left_model_A.addRow(new Object[]{alarme.getDate(), alarme.getLocation(), alarme.getType(), alarme.getDetail()} );
         }
 
@@ -169,7 +174,7 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
 
         splitContentG.setLeftComponent(left_panel_A);
 
-        //*********RIGHT TOP PANEL**********
+        //*********RIGHT TOP PANEL Alarmes traitées moniteur A**********
         right_panel_A.setBackground(Color.DARK_GRAY);
         right_panel_A.setLayout(new GridBagLayout());
 
@@ -207,6 +212,7 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+        //Empêche le redimensionnement des panels
         JSplitPane splitContentD = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT){
             private final int location = 775;
             {
@@ -226,7 +232,7 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        //********LEFT BOTTOM PANEL*********
+        //********LEFT BOTTOM PANEL Alarmes non traitées moniteur B*********
         left_panel_B.setBackground(Color.DARK_GRAY);
         left_panel_B.setLayout(new GridBagLayout());
 
@@ -323,7 +329,7 @@ public void display_moniteur(Moniteur moniteurA, Moniteur moniteurB){
         splitContentD.setLeftComponent(left_panel_B);
 
 
-        //**********RIGHT BOTTOM PANEL**********
+        //**********RIGHT BOTTOM PANEL Alarmes traitées moniteur B**********
         right_panel_B.setBackground(Color.DARK_GRAY);
         right_panel_B.setLayout(new GridBagLayout());
 

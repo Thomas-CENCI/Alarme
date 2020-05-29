@@ -22,14 +22,13 @@ public class Moniteur {
         this.alarmList.add(alarme);
     }
 
-    public void removeAlarmListener(Alarme alarme){
-        this.alarmList.remove(alarme);
-    }
-
     public ArrayList<Alarme> getAlarmesRecues(){
+        /*
+        Retourne les alarmes reçues et non traitées du moniteur
+        */
         ArrayList<Alarme> alarmes_recues = new ArrayList<Alarme>();
         for (Alarme alarme : alarmList){
-            if (alarme.getStatus() == false){
+            if (alarme.getStatus() == false){//status == false, alarme non traitée
                 alarmes_recues.add(alarme);
             }
         }
@@ -37,9 +36,12 @@ public class Moniteur {
     }
 
     public ArrayList<Alarme> getAlarmesTraitees(){
+        /*
+        Retourne les alarmes traitées du moniteur
+        */
         ArrayList<Alarme> alarmes_traitees = new ArrayList<Alarme>();
         for (Alarme alarme : alarmList){
-            if (alarme.getStatus() == true){
+            if (alarme.getStatus() == true){//status == true, alarme traitée
                 alarmes_traitees.add(alarme);
             }
         }
@@ -47,6 +49,10 @@ public class Moniteur {
     }
 
     public Alarme getSelectedAlarme(String date, String location, String type, String detail){
+        /*
+        Retourne l'objet Alarme du moniteur correspondant aux critères passés en paramètre,
+        la précision de la date permet d'éviter toute confusion entre différents objets ayant des caractéristiques communes
+        */
         for (Alarme alarme : this.getAlarmes()){
             if (alarme.getDate() == date && alarme.getLocation() == location && alarme.getType() == type && alarme.getDetail() == detail){
                 
